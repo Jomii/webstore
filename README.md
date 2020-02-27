@@ -86,6 +86,27 @@ Testing will be done manually.
 
 Automated tests will be written if time allows.
 ## Project timetable and division of work    
+```mermaid
+gantt
+	title Timetable
+	dateFormat  YYYY MM DD
+	
+	section User management
+    DB schema           :a1, 2020-02-28, 3d
+	Create pages     :a2, after a1, 4d
+    Users API   :after a1, 1d
+    
+	section Authorization
+	User auth      :after a1, 2d
+	Role based access      : 2d
+	
+    section Buying and selling
+	DB schema      :after a2, 3d
+	Create pages      :4d
+	
+    section Administration
+	Create page      :2d
 
+```
 
 *Good luck and happy WWWdevvin’!*
