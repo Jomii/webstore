@@ -13,7 +13,7 @@ The headers that must be present in this document are shown here.
 For instructions on what to add under these headers, see the course project assignment document, [see the coursework assignment document](https://docs.google.com/document/d/1ctG6mURrs1WlqwwPnMOFE_mSIEhZVCjp2XGefAZMdxQ/edit#heading=h.vsanic5plbto)
 
 ## Course project group information    
-# Group 404 members
+### Group 404 members
 - Miika Johansson, 427655, miika.johansson@tuni.fi
 
 [GitLab Repository](https://course-gitlab.tuni.fi/tieta12-2019-2020/404/tree/master)
