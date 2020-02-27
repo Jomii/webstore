@@ -15,6 +15,7 @@ For instructions on what to add under these headers, [see the coursework assignm
 ## Course project group information    
 ### Group 404 members
 - Miika Johansson, 427655, miika.johansson@tuni.fi
+- Juho Lehtimäki, 425097, juho.a.lehtimaki@tuni.fi
 
 [GitLab Repository](https://course-gitlab.tuni.fi/tieta12-2019-2020/404/tree/master)
 ## Planned functionality  
