@@ -47,7 +47,34 @@ Each member chooses an issue needed for the next major task to work on. Upon com
 4. Administration
     - Create a page where admins can view users and offers
 ## Pages and navigation    
-## Modules your group created in your Node project    
+## Modules your group created in your Node project   
+```
+root
+├── README.md
+├── server
+|   ├── node_modules
+|   ├── package.json
+|   ├── Server.js
+|   └── models
+|       ├── user.js
+|       └── item.js
+└── client
+    ├── node_modules
+    ├── package.json
+    ├── .gitignore
+    ├── public
+    │   ├── favicon.ico
+    │   ├── index.html
+    │   └── manifest.json
+    └── src
+        ├── App.css
+        ├── App.js
+        ├── App.test.js
+        ├── index.css
+        ├── index.js
+        ├── logo.svg
+        └── serviceWorker.js
+```
 ## Mongo database and Mongoose schemas    
 ## API
 ## React and Redux
