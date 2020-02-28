@@ -173,6 +173,10 @@ const itemSchema = new Schema({
 
 ## API
 
+Api for now, will be updated later on.
+
+![api](https://i.imgur.com/Cq5Zaqa.png)
+
 ## React and Redux
 
 In this group work we use React with [Create React App](https://github.com/facebook/create-react-app#create-react-app--)
