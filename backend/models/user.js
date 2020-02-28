@@ -3,6 +3,7 @@
 // see readme.md for issues.
 const userSchema = new Schema({
   email: {
+    // Add validator function.
     type: String,
     required: true
   },
@@ -23,3 +24,5 @@ const userSchema = new Schema({
     required: true
   }
 });
+
+const User = (exports.User = mongoose.model("Users", userSchema));

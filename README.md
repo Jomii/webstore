@@ -119,8 +119,57 @@ const userSchema = new Schema({
 
 - Use email as username
 - Mail address required?
+- Credit card information saved to db?
 - Separate schema/collection for passwords?
 - Separate schem/collection for roles?
+
+### Item
+
+```javascript
+const itemSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true,
+    maxlength: 400 // hardcoded length or no?
+  },
+  price: {
+    // Different prices?
+    type: Number,
+    required: true
+  },
+  owner: {
+    // Reference to user-schema
+    type: ObjectId,
+    ref: "User",
+    required: true
+  },
+  status: {
+    // TODO
+    type: String,
+    required: true
+  },
+  dateAdded: {
+    type: Date,
+    required: false // or true?
+  },
+  dateSold: {
+    type: Date,
+    required: false
+  }
+});
+```
+
+#### Notes
+
+- Hardcoded name, description lengths or no?
+- Multiple prices for same item? (shopkeeper profit vs seller)
+- Link to user schema TODO
+- status: SOLD / WAITING-FOR-APPROVAL etc. needs design
+- dateAdded, dateSold needed?
 
 ## API
 
