@@ -55,6 +55,9 @@ Each member chooses an issue needed for the next major task to work on. Upon com
    - Create a page where admins can view users and offers
 
 ## Pages and navigation
+Pages for now, will be updated later on.
+
+![api](https://i.imgur.com/Cq5Zaqa.png)
 
 ## Modules your group created in your Node project
 
@@ -173,9 +176,6 @@ const itemSchema = new Schema({
 
 ## API
 
-Api for now, will be updated later on.
-
-![api](https://i.imgur.com/Cq5Zaqa.png)
 
 ## React and Redux
 
