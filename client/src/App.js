@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
+import { setAuthentication } from "./actions/index.js";
 
 export const App = () => {
-  const [user, setUser] = useState();
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!user) {
+    if (!auth) {
       fetch("/users")
         .then(response => {
           return response.json();
         })
         .then(data => {
-          setUser(data);
+          dispatch(setAuthentication(data));
         });
     }
   });
@@ -19,9 +22,9 @@ export const App = () => {
   return (
     <>
       <h1>Our app and test user info from backend</h1>
-      {user ? (
+      {auth ? (
         <div>
-          Username: {user.username} and password: {user.password}
+          Username: {auth.username} and password: {auth.password}
         </div>
       ) : null}
     </>
