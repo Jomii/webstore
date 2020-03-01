@@ -176,6 +176,22 @@ const itemSchema = new Schema({
 
 ## API
 
+Routes:
+/ - home/main view that contains info about the project and website
+/items - list of all buyable items on the site (fetches items from backend)
+/items/:id - route to a specific item with a buy link and edit if shopkeeper/admin (gets item info from /market as props)
+/users - admin view with list of all users and link to modify their role (fetches list of all users from backend)
+/users/:id - view where admin can access and modify specific user's role (gets user info from /users as props)
+/users/:id - user can access his own info and edit it
+/shopkeeper - shopkeeper view where shopkeeper verifies pending items and can make changes to them (fetches list of all pending items from backend)
+/login - where user logs in (requests login from backend)
+/register - where user registers (request register from backend)
+
+Api's structure in order:
+Static navbar, contains all links on the website depending on the user's role (home, market, admin view/shopkeeper view, login/register/pofile
+Banner with project 404 logo
+Main container that changes based on the url
+Footer
 
 ## React and Redux
 
