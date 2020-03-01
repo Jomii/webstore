@@ -193,6 +193,8 @@ DELETE routes:
 POST & PUT routes:
 - /api/users with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret", role: "admin"}
 - /api/items with body: {"name" : "test item", "description": "test", "price": 5, "owner": "owner1", "status": "pending",  "dateAdded": null, "dateSold": null}
+- /api/users/login with body: {"email": "email@test.com", "password": "secret"}
+- /api/users/register with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret", role: "admin"}
 
 ### HATEOAS
 HATEOAS will be implemented by simply including links related to the resource object.
