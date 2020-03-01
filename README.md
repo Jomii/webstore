@@ -193,6 +193,16 @@ Api's structure in order:
 - Main container that changes based on the url
 - Footer
 
+### HATEOAS
+HATEOAS will be implemented by simply including links related to the resource object.
+```JSON
+{
+  ...
+  links: [
+    "self": "http://localhost:3000/api/users/1"
+  ]
+}
+```
 ## React and Redux
 
 In this group work we use React with [Create React App](https://github.com/facebook/create-react-app#create-react-app--)
