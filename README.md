@@ -6,6 +6,10 @@ When you write it, you must use Markdown. [Documentation for GitLab Flavored Mar
 
 The directory structure of the code is up to your group to decide, but this README.md file must remain in place.
 
+# Running the project
+
+To run the project the line ```config.vm.network "forwarded_port", guest: 5000, host: 5000``` needs to be added to Vagrantfile.
+
 # Initial project plan document
 
 The headers that must be present in this document are shown here.
