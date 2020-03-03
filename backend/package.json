@@ -4,13 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node_modules/nodemon/bin/nodemon.js -L --watch models --watch routes app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "helmet": "^3.21.3"
+    "helmet": "^3.21.3",
+    "mongoose": "^5.9.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }

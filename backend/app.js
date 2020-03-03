@@ -1,7 +1,14 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const helmet = require("helmet");
 const cors = require("cors");
 const app = express();
+
+// connect database
+mongoose.connect("mongodb://localhost/WWWProgramming", {
+  useNewUrlParser: true, // Get rid of deprecation warnings
+  useUnifiedTopology: true
+});
 
 //routes
 const users = require("./routes/api/users");
