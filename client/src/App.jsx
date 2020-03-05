@@ -11,6 +11,7 @@ import { LoginPage } from "./components/LoginPage.jsx";
 import { RegisterPage } from "./components/RegisterPage.jsx";
 import { ProfilePage } from "./components/ProfilePage.jsx";
 import { PendingItemsPage } from "./components/PendingItemsPage.jsx";
+import { ConfirmationPage } from "./components/ConfirmationPage.jsx";
 
 //Other components
 import { Footer } from "./components/Footer.jsx";
@@ -25,7 +26,8 @@ export const App = () => {
         <Layout>
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route path="/market" component={MarketPage} />
+            <Route exact path="/market" component={MarketPage} />
+            <Route path="/market/:id" component={ConfirmationPage} />
             <Route path="/users" component={UsersPage} />
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
