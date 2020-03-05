@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    required: true
+    required: false // SET THIS TO TRUE WHEN ROLES ARE IMPLEMENTED
   }
 });
 
