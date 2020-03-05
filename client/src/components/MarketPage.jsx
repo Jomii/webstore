@@ -28,7 +28,7 @@ export const MarketPage = () => {
       {items ? (
         <>
           {items.map((item, index) => (
-            <Item props={item} />
+            <Item iteminfo={item} key={index} />
           ))}
         </>
       ) : null}
