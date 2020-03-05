@@ -4,25 +4,28 @@ import "./App.css";
 
 //Pages
 import { HomePage } from "./components/HomePage.jsx";
-import { ItemsPage } from "./components/ItemsPage.jsx";
+import { MarketPage } from "./components/MarketPage.jsx";
 import { UsersPage } from "./components/UsersPage.jsx";
 import { NoMatchPage } from "./components/NoMatchPage.jsx";
 
 //Other components
 import { Footer } from "./components/Footer.jsx";
 import { NavigationBar } from "./components/NavigationBar.jsx";
+import { Layout } from "./components/Layout.jsx";
 
 export const App = () => {
   return (
     <>
       <Router>
         <NavigationBar />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/items" component={ItemsPage} />
-          <Route path="/users" component={UsersPage} />
-          <Route component={NoMatchPage} />
-        </Switch>
+        <Layout>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/market" component={MarketPage} />
+            <Route path="/users" component={UsersPage} />
+            <Route component={NoMatchPage} />
+          </Switch>
+        </Layout>
       </Router>
       <Footer />
     </>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export const ItemsPage = () => {
+export const MarketPage = () => {
   const [items, setItems] = useState();
 
   useEffect(() => {
