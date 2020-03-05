@@ -1,4 +1,7 @@
-// import mongoose
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
+// jos tarvitaan täällä
+// const validator = require("validator")
 
 const itemSchema = new Schema({
   name: {
@@ -17,7 +20,7 @@ const itemSchema = new Schema({
   },
   owner: {
     // Reference to user-schema
-    type: ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
     required: true
   },
