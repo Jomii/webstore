@@ -22,7 +22,6 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  console.log("posting");
   let newItem = new Item({
     name: req.body.name,
     description: req.body.description,

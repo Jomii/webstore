@@ -16,6 +16,11 @@ export const NavigationBar = () => {
           </Link>
         </li>
         <li className="nav-item active">
+          <Link to="/post-item" className="nav-link">
+            Post item
+          </Link>
+        </li>
+        <li className="nav-item active">
           <Link to="/users" className="nav-link">
             Users
           </Link>
