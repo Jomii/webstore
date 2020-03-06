@@ -1,6 +1,17 @@
-// import mongoose
+const mongoose = require("mongoose");
 
-const itemSchema = new Schema({
+const schemaDefaults = {
+  status: {
+    values: ["pending", "listed", "sold"],
+    defaultValue: "pending"
+  },
+  margin: {
+    values: [0.1, 0.2, 0.3],
+    default: 0.1
+  }
+};
+
+const itemSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -8,27 +19,35 @@ const itemSchema = new Schema({
   description: {
     type: String,
     required: true,
-    maxlength: 400 // hardcoded length or no?
+    maxlength: 400
   },
   price: {
-    // Different prices?
     type: Number,
     required: true
   },
+  margin: {
+    type: Number,
+    default: schemaDefaults.margin.defaultValue,
+    enum: schemaDefaults.margin.values
+  },
+  /* TODO
   owner: {
     // Reference to user-schema
     type: ObjectId,
     ref: "User",
     required: true
   },
+  */
   status: {
-    // TODO
     type: String,
-    required: true
+    trim: true,
+    lowercase: true,
+    default: schemaDefaults.status.defaultValue,
+    enum: schemaDefaults.status.values
   },
   dateAdded: {
     type: Date,
-    required: false // or true?
+    default: Date.now
   },
   dateSold: {
     type: Date,
@@ -36,4 +55,16 @@ const itemSchema = new Schema({
   }
 });
 
-const Item = (exports.Item = mongoose.model("Items", itemSchema));
+itemSchema.virtual("links").get(function() {
+  return [
+    {
+      self: "http://localhost:5000/api/items/" + this._id
+    }
+  ];
+});
+
+itemSchema.set("toJSON", {
+  virtuals: true
+});
+
+module.exports = mongoose.model("Item", itemSchema);
