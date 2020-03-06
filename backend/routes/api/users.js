@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const api = express.Router();
 const bcrypt = require("bcryptjs");
-const User = require("../../models/user");
+const { User } = require("../../models/user");
 const path = "http://localhost:5000/api/users/";
 
 const saltRounds = 12;

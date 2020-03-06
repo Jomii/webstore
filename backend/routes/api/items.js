@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Item = require("../../models/Item");
+const Item = require("../../models/item.js").Item;
 const path = "http://localhost:5000/api/items/";
 
 router.get("/", (req, res) => {
