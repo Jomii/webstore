@@ -39,7 +39,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\": \"admin2@test.com\",\n\t\"firstName\": \"Foo\",\n\t\"lastName\": \"Bar\",\n\t\"password\": \"secret\",\n\t\"role\": \"admin\"\n}",
+					"raw": "{\n\t\"email\": \"admin@test.com\",\n\t\"firstName\": \"Foo\",\n\t\"lastName\": \"Bar\",\n\t\"passwod\": \"secret\",\n\t\"role\": \"admin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -56,6 +56,45 @@
 					"path": [
 						"api",
 						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"admin@test.com\",\n\t\"password\": \"secret\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"login"
 					]
 				}
 			},
