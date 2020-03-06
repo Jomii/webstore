@@ -1,9 +1,9 @@
 import React from "react";
 
-export const LoginPage = () => {
+export const ProfilePage = () => {
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Profile page</h1>
     </div>
   );
 };

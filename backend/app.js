@@ -11,6 +11,7 @@ mongoose.connect("mongodb://localhost/WWWProgramming", {
 });
 
 //routes
+const login = require("./routes/api/login");
 const users = require("./routes/api/users");
 const items = require("./routes/api/items");
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use(express.json());
 
 //users & items routes
+app.use("/api/login", login);
 app.use("/api/users", users);
 app.use("/api/items", items);
 

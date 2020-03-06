@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Item } from "./Item.jsx";
 
-export const ItemsPage = () => {
+export const MarketPage = () => {
   const [items, setItems] = useState();
 
   useEffect(() => {
@@ -17,13 +18,17 @@ export const ItemsPage = () => {
 
   return (
     <div>
+      <div className="row justify-content-center search-container">
+        <form className="form-inline search-form">
+          <input type="text" />
+          <button type="submit">Search</button>
+        </form>
+      </div>
       <h1>Items:</h1>
       {items ? (
         <>
           {items.map((item, index) => (
-            <p key={index}>
-              Item's name: {item.name}, item's price: {item.price}
-            </p>
+            <Item iteminfo={item} key={index} />
           ))}
         </>
       ) : null}
