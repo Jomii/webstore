@@ -4,16 +4,7 @@ const Item = require("../../models/Item");
 const path = "http://localhost:5000/api/items/";
 
 router.get("/", (req, res) => {
-  /*
-  res.json({
-    items: [
-      { _id: "5099803df3f4948bd2f98391", name: "tuote1", price: 50 },
-      { _id: "5099803df3f4948bd2f93233", name: "tutoe2", price: 100 }
-    ]
-  });
-  */
-  console.log("Fetching users from backend");
-
+  console.log("Fetching items from backend");
   Item.find((err, items) => {
     if (err) {
       res.sendStatus(404);
