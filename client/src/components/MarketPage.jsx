@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Item } from "./Item.jsx";
+import { ListedItem } from "./ListedItem.jsx";
 
 export const MarketPage = () => {
   const [items, setItems] = useState();
 
   useEffect(() => {
     if (!items) {
-      fetch("/api/items")
+      fetch("http://localhost:5000/api/items?status=listed")
         .then(response => {
           return response.json();
         })
@@ -28,7 +28,7 @@ export const MarketPage = () => {
       {items ? (
         <>
           {items.map((item, index) => (
-            <Item iteminfo={item} key={index} />
+            <ListedItem iteminfo={item} key={index} />
           ))}
         </>
       ) : null}

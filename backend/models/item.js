@@ -46,7 +46,21 @@ const itemSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
     default: schemaDefaults.status.defaultValue,
-    enum: schemaDefaults.status.values
+    enum: schemaDefaults.status.values,
+    validate: {
+      validator: val => {
+        for (let i = 0; i < schemaDefaults.status.values.length; i++) {
+          if (val === schemaDefaults.status.values[i] || val === "") {
+            return true;
+          }
+        }
+
+        return false;
+      },
+      message: `Status must be one of: "${schemaDefaults.status.values.join(
+        '", "'
+      )}"`
+    }
   },
   dateAdded: {
     type: Date,

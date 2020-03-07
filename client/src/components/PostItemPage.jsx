@@ -12,7 +12,7 @@ export const PostItemPage = () => {
       price: itemPrice,
       description: itemDescription
     };
-    fetch("/api/items", {
+    fetch("http://localhost:5000/api/items", {
       method: "POST",
       cache: "no-cache",
       headers: {

@@ -7,7 +7,7 @@ export const UsersPage = () => {
   const auth = useSelector(state => state.auth);
   useEffect(() => {
     if (!auth) {
-      fetch("/api/users")
+      fetch("http://localhost:5000/api/users")
         .then(response => {
           return response.json();
         })

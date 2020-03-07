@@ -38,7 +38,7 @@ export const RegisterPage = () => {
       role: isShopkeeper ? "shopkeeper" : "user"
     };
 
-    fetch("/api/users", {
+    fetch("http://localhost:5000/api/users", {
       method: "POST",
       cache: "no-cache",
       headers: {
