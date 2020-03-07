@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const { User } = require("./user");
 // jos tarvitaan täällä
 // const validator = require("validator")
 
@@ -33,14 +34,10 @@ const itemSchema = new mongoose.Schema({
     default: schemaDefaults.margin.defaultValue,
     enum: schemaDefaults.margin.values
   },
-  /* TODO
   owner: {
-    // Reference to user-schema
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
   },
-  */
   status: {
     type: String,
     trim: true,
