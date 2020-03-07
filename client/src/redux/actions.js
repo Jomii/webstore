@@ -34,34 +34,6 @@ export const sendLoginRequest = credentials => {
   };
 };
 
-/*fetch("http://localhost:5000/api/login", {
-   method: "POST",
-   cache: "no-cache",
-   headers: {
-     "Content-Type": "application/json"
-   },
-   body: JSON.stringify(credentials)
- })
-   .then(response => {
-     if (response.ok) {
-       setSuccess(true);
-       return response.json();
-     } else {
-       setSuccess(false);
-     }
-   })
-   .then(result => {
-     setEmail("");
-     setPassword("");
-
-     if (result) {
-       // Login ok token is in result
-       console.log("Success: " + JSON.stringify(result));
-       // Redirect to home page after setting token to Redux store?
-     }
-   })
-   .catch(e => console.error("Error: " + e));*/
-
 /*
  * Send API request to get JWT etc. Nothing special here.
  */
@@ -77,8 +49,8 @@ const receiveAuth = json => {
   return {
     type: RECEIVE_AUTH,
     token: json.token,
-    user_role: json.role,
-    user_id: json.id,
+    role: json.role,
+    id: json.id,
     isFetching: false,
     error: null
   };

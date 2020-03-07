@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { sendLoginRequest } from "../redux/actions.js";
+import { connect } from "react-redux";
 
-const Alert = props => {
+// Unconnected component.
+const AlertC = props => {
   const success = props.success;
 
   if (success === false) {
@@ -14,6 +16,14 @@ const Alert = props => {
     return null;
   }
 };
+
+const mapStateToProps = state => {
+  const error = state.auth.error;
+  return { success: error === null ? true : false };
+};
+
+// Connected Alert-component
+const Alert = connect(mapStateToProps)(AlertC);
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -30,8 +40,7 @@ const LoginPage = () => {
     };
 
     props.sendLoginRequest(credentials);
-
-    // I replaced this with Redux thunk function found in /redux/actions.js
+    // I replaced this with Redux thunk function (see above).
     /*fetch("http://localhost:5000/api/login", {
       method: "POST",
       cache: "no-cache",
