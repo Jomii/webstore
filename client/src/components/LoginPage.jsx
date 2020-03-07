@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { sendLoginRequest } from "../redux/actions.js";
 
 const Alert = props => {
   const success = props.success;
@@ -14,10 +15,12 @@ const Alert = props => {
   }
 };
 
-export const LoginPage = () => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [success, setSuccess] = useState(true);
+  // This is no longer needed since I replace it with Redux thunk.
+  // But I'll leave it here just in case.
+  //const [success, setSuccess] = useState(true);
 
   const login = e => {
     e.preventDefault();
@@ -26,7 +29,10 @@ export const LoginPage = () => {
       password: password
     };
 
-    fetch("http://localhost:5000/api/login", {
+    props.sendLoginRequest(credentials);
+
+    // I replaced this with Redux thunk function found in /redux/actions.js
+    /*fetch("http://localhost:5000/api/login", {
       method: "POST",
       cache: "no-cache",
       headers: {
@@ -52,7 +58,7 @@ export const LoginPage = () => {
           // Redirect to home page after setting token to Redux store?
         }
       })
-      .catch(e => console.error("Error: " + e));
+      .catch(e => console.error("Error: " + e));*/
   };
 
   return (
@@ -86,3 +92,12 @@ export const LoginPage = () => {
     </div>
   );
 };
+
+const mapDispatchToProps = {
+  sendLoginRequest
+};
+
+export default connect(
+  null, // Might need state for error display or to see if success?
+  mapDispatchToProps
+)(LoginPage);

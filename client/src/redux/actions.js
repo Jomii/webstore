@@ -14,9 +14,58 @@ export const setAuthentication = user => {
  */
 
 /*
+ * Sends a login request to API and tries to get JWT and other authdata.
+ * Need credentials parameter that contains email and password.
+ */
+export const sendLoginRequest = credentials => {
+  return dispatch => {
+    dispatch(requestAuth());
+    fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(respone => response.json())
+      .then(authData => dispatch(receiveAuth(authData)))
+      .catch(error => dispatch(errorAuth(error)));
+  };
+};
+
+/*fetch("http://localhost:5000/api/login", {
+   method: "POST",
+   cache: "no-cache",
+   headers: {
+     "Content-Type": "application/json"
+   },
+   body: JSON.stringify(credentials)
+ })
+   .then(response => {
+     if (response.ok) {
+       setSuccess(true);
+       return response.json();
+     } else {
+       setSuccess(false);
+     }
+   })
+   .then(result => {
+     setEmail("");
+     setPassword("");
+
+     if (result) {
+       // Login ok token is in result
+       console.log("Success: " + JSON.stringify(result));
+       // Redirect to home page after setting token to Redux store?
+     }
+   })
+   .catch(e => console.error("Error: " + e));*/
+
+/*
  * Send API request to get JWT etc. Nothing special here.
  */
-export const requestAuth = () => {
+const requestAuth = () => {
   return { type: REQUEST_AUTH, isFetching: true, error: null };
 };
 
@@ -24,7 +73,7 @@ export const requestAuth = () => {
  * Receive JWT and other login data from server.
  * JSON should contain: token (JWT), user role and user id.
  */
-export const receiveAuth = json => {
+const receiveAuth = json => {
   return {
     type: RECEIVE_AUTH,
     token: json.token,
@@ -40,7 +89,7 @@ export const receiveAuth = json => {
  * an ERROR appears while logging in.
  * Receives error and makes it a string.
  */
-export const errorAuth = error => {
+const errorAuth = error => {
   return {
     type: ERROR_AUTH,
     error: error.toString(),
