@@ -4,6 +4,6 @@
  * These actions handle logging in and receiving
  * authentication data such as the JSON web token.
  */
-const REQUEST_AUTH = "REQUEST_AUTH";
-const RECEIVE_AUTH = "RECEIVE_AUTH";
-const ERROR_AUTH = "ERROR_AUTH";
+export const REQUEST_AUTH = "REQUEST_AUTH";
+export const RECEIVE_AUTH = "RECEIVE_AUTH";
+export const ERROR_AUTH = "ERROR_AUTH";
