@@ -28,7 +28,7 @@ export const sendLoginRequest = credentials => {
       },
       body: JSON.stringify(credentials)
     })
-      .then(respone => response.json())
+      .then(response => response.json())
       .then(authData => dispatch(receiveAuth(authData)))
       .catch(error => dispatch(errorAuth(error)));
   };

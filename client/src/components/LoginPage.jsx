@@ -25,7 +25,8 @@ const mapStateToProps = state => {
 // Connected Alert-component
 const Alert = connect(mapStateToProps)(AlertC);
 
-const LoginPage = () => {
+// Unconnected LoginPage-component.
+const LoginPageC = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // This is no longer needed since I replace it with Redux thunk.
@@ -72,7 +73,7 @@ const LoginPage = () => {
 
   return (
     <div>
-      <Alert success={success} />
+      <Alert />
       <h1>Login</h1>
       <form onSubmit={login}>
         <div className="form-group">
@@ -106,7 +107,7 @@ const mapDispatchToProps = {
   sendLoginRequest
 };
 
-export default connect(
+export const LoginPage = connect(
   null, // Might need state for error display or to see if success?
   mapDispatchToProps
-)(LoginPage);
+)(LoginPageC);
