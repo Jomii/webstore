@@ -33,7 +33,7 @@ api.post("/", (req, res) => {
               secret,
               { algorithm: "HS256" },
               (err, token) => {
-                res.json({ token: token });
+                res.json({ token: token, id: user.id, role: user.role });
               }
             );
           } else {
