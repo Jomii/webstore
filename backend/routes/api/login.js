@@ -7,9 +7,10 @@ const { User } = require("../../models/user");
 const secret = "y64u567y2g4";
 
 // Login
-api.get("/", (req, res) => {
+api.post("/", (req, res) => {
   if (!req.body || !req.body.email || !req.body.password) {
     res.sendStatus(401);
+    return;
   }
 
   let email = req.body.email;
