@@ -3,14 +3,15 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import { App } from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { createStore } from "redux";
-import { allReducers } from "./reducers/index.js"; //combined reducers
+//import { createStore } from "redux";
+//import { allReducers } from "./reducers/index.js"; //combined reducers
 import { Provider } from "react-redux";
+import { store } from "./redux/store.js";
 
-const store = createStore(
-  allReducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() //For debugging with browser extension
-);
+//const store = createStore(
+//  allReducers,
+//  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() //For debugging with browser extension
+//);
 
 ReactDOM.render(
   <Provider store={store}>

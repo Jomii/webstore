@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { setAuthentication } from "../actions/index.js";
+import { setAuthentication } from "../redux/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 
 export const UsersPage = () => {
