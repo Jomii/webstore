@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { sendLoginRequest } from "../redux/actions.js";
+import { sendLoginRequest } from "../redux/actions/loginActions";
 import { connect } from "react-redux";
 
 // Unconnected component.

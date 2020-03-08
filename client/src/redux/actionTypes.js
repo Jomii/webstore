@@ -7,3 +7,11 @@
 export const REQUEST_AUTH = "REQUEST_AUTH";
 export const RECEIVE_AUTH = "RECEIVE_AUTH";
 export const ERROR_AUTH = "ERROR_AUTH";
+
+/*
+ * These actions handle GET requests to api/items
+ */
+
+export const GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST";
+export const GET_ITEMS_RECEIVE = "GET_ITEMS_RECEIVE";
+export const GET_ITEMS_ERROR = "GET_ITEMS_ERROR";

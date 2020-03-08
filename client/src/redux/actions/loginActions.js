@@ -1,5 +1,5 @@
 // Authentication/login actions.
-import { REQUEST_AUTH, RECEIVE_AUTH, ERROR_AUTH } from "./actionTypes.js";
+import { REQUEST_AUTH, RECEIVE_AUTH, ERROR_AUTH } from "../actionTypes.js";
 
 /*
  * Authentication/login action creators.
