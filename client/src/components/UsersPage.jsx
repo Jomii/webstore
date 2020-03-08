@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
-import { setAuthentication } from "../redux/actions.js";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react"; //{ useEffect } from "react";
+//import { setAuthentication } from "../redux/actions.js";
+//import { useDispatch, useSelector } from "react-redux";
+
+// Note: This file is in progress. Will be fixed later.
 
 export const UsersPage = () => {
-  const dispatch = useDispatch();
+  /*const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
   useEffect(() => {
     if (!auth) {
@@ -31,5 +33,6 @@ export const UsersPage = () => {
     }
   };
 
-  return userInfo();
+  return userInfo();*/
+  return <></>;
 };
