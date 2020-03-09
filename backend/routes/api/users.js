@@ -69,8 +69,8 @@ api.put("/:id", (req, res) => {
       if (!user) {
         res.sendStatus(404);
       } else {
-        res.set("Location", path + user._id);
         res.status(200);
+        res.location(path + user._id);
         res.json({ user: user });
       }
     }
@@ -97,6 +97,25 @@ api.get("/", (req, res) => {
   });
 });
 
+// Get user by id
+api.get("/:id", (req, res) => {
+  User.findOne({ _id: req.params.id }, (err, user) => {
+    if (err) {
+      res.sendStatus(404);
+      return console.error(err);
+    }
+
+    if (!user) {
+      res.sendStatus(404);
+    } else {
+      res.status(200);
+      res.location(path + user._id);
+      res.json({ user: user });
+    }
+  });
+});
+
+// Delete user by id
 api.delete("/:id", (req, res) => {
   User.findByIdAndDelete(req.params.id, (err, user) => {
     if (err) {
