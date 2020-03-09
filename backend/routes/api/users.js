@@ -1,5 +1,4 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const api = express.Router();
 const bcrypt = require("bcryptjs");
 const { User } = require("../../models/user");
@@ -48,9 +47,34 @@ api.post("/", (req, res) => {
       console.log(`Inserted a new user (${newUser.email}) to collection`);
       res.status(201);
       res.location(path + newUser._id);
-      res.json(newUser);
+      res.json({ user: newUser });
     });
   });
+});
+
+// Update user
+api.put("/:id", (req, res) => {
+  console.log("Updating user by id: " + req.params.id);
+
+  User.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true },
+    (err, user) => {
+      if (err) {
+        res.sendStatus(400);
+        return console.error(err);
+      }
+
+      if (!user) {
+        res.sendStatus(404);
+      } else {
+        res.set("Location", path + user._id);
+        res.status(200);
+        res.json({ user: user });
+      }
+    }
+  );
 });
 
 // Get all users
@@ -69,6 +93,23 @@ api.get("/", (req, res) => {
       res.status(200);
       res.location(path);
       res.json({ users: users });
+    }
+  });
+});
+
+api.delete("/:id", (req, res) => {
+  User.findByIdAndDelete(req.params.id, (err, user) => {
+    if (err) {
+      res.sendStatus(404);
+      return console.error(err);
+    }
+
+    if (!user) {
+      res.sendStatus(404);
+    } else {
+      res.status(204);
+      res.json();
+      console.log("Deleted user by id: " + req.params.id);
     }
   });
 });
