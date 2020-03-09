@@ -62,6 +62,27 @@
 			"response": []
 		},
 		{
+			"name": "GET user by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/users/5e62935987e00608efff5423",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"users",
+						"5e62935987e00608efff5423"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "CREATE user",
 			"request": {
 				"method": "POST",
@@ -75,7 +96,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\": \"admin@test.com\",\n\t\"firstName\": \"Foo\",\n\t\"lastName\": \"Bar\",\n\t\"passwod\": \"secret\",\n\t\"role\": \"admin\"\n}",
+					"raw": "{\n\t\"email\": \"admin@test.com\",\n\t\"firstName\": \"Foo\",\n\t\"lastName\": \"Bar\",\n\t\"password\": \"secret\",\n\t\"role\": \"admin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -111,7 +132,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\": \"admin2@test.com\",\n\t\"firstName\": \"Admin\",\n\t\"lastName\": \"Administrator\",\n\t\"passwod\": \"secret\",\n\t\"role\": \"admin\"\n}",
+					"raw": "{\n\t\"email\": \"admin@test.com\",\n\t\"firstName\": \"Admin\",\n\t\"lastName\": \"Administrator\",\n\t\"password\": \"secret\",\n\t\"role\": \"admin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -163,7 +184,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/users/5e636851c7b67d081d29d74b",
+					"raw": "http://localhost:5000/api/users/5e664c9cb2b59d0b63b79c56",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -172,7 +193,7 @@
 					"path": [
 						"api",
 						"users",
-						"5e636851c7b67d081d29d74b"
+						"5e664c9cb2b59d0b63b79c56"
 					],
 					"query": [
 						{
