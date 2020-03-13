@@ -9,7 +9,12 @@ export const PendingItemsPage = () => {
 
   useEffect(() => {
     if (!items) {
-      fetch("http://localhost:5000/api/items?status=pending")
+      fetch("http://localhost:5000/api/items?status=pending", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + auth.token
+        }
+      })
         .then(response => {
           return response.json();
         })

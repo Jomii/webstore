@@ -63,6 +63,9 @@ router.post("/", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
         seller: user
       });
 
+      console.log(user);
+      console.log(newItem);
+
       newItem.save(err => {
         if (err) {
           res.sendStatus(500);
@@ -77,41 +80,32 @@ router.post("/", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
     .catch(e => res.sendStatus(500));
 });
 
-router.put("/:id", requireRole(["admin", "shopkeeper"]), (req, res) => {
-  Item.findOneAndUpdate(
-    { _id: req.params.id },
-    { status: req.body.status, margin: req.body.margin }
-  ).exec(err => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error(err);
-    }
-    console.log("Updated an item in collection");
-    res.sendStatus(201);
-  });
+router.put("/:id", requireRole(["admin", "shopkeeper", "user"]), (req, res) => {
+  if (req.token.role === "shopkeeper" && req.body.margin && req.body.status) {
+    Item.findOneAndUpdate(
+      { _id: req.params.id },
+      { status: req.body.status, margin: req.body.margin }
+    ).exec(err => {
+      if (err) {
+        res.sendStatus(500);
+        return console.error(err);
+      }
+      res.sendStatus(201);
+      return;
+    });
+  }
 });
 
-//testaamista varten, lisää userin itemiin
-router.post("/test", async (req, res) => {
-  let user = await User.findOne(/*{_id: jwt.id}*/); //id jwt:eestä jonka avulla etitään oikea useri db:eestä?
-  let newItem = new Item({
-    name: "testi tuote",
-    description: "kuvaus",
-    price: 15,
-    owner: user
-  });
+router.delete("/", requireRole(["admin"]), (req, res) => {
+  Item.remove()
+    .then(() => res.sendStatus(201))
+    .catch(() => res.status(500));
+});
 
-  newItem.save(err => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error(err);
-    }
-
-    console.log("Inserted a new item to collection with user ref");
-    res.status(201);
-    res.location(path + newItem._id);
-    res.json(newItem);
-  });
+router.delete("/:id", requireRole(["admin"]), (req, res) => {
+  Item.deleteOne({ _id: req.params.id })
+    .then(() => res.sendStatus(201))
+    .catch(e => res.status(500));
 });
 
 module.exports = router;
