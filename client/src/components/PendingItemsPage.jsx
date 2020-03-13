@@ -22,7 +22,7 @@ export const PendingItemsPage = () => {
           setItems(data.items);
         });
     }
-  }, [items]);
+  }, [items, auth]);
 
   if (auth.role === "admin" || auth.role === "shopkeeper") {
     return (

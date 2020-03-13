@@ -24,7 +24,7 @@ export const ConfirmationPage = () => {
           console.log(data);
         });
     }
-  }, [item, id]);
+  }, [item, id, auth]);
 
   const pay = e => {
     e.preventDefault();

@@ -62,10 +62,6 @@ router.post("/", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
         price: req.body.price,
         seller: user
       });
-
-      console.log(user);
-      console.log(newItem);
-
       newItem.save(err => {
         if (err) {
           res.sendStatus(500);
@@ -82,17 +78,44 @@ router.post("/", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
 
 router.put("/:id", requireRole(["admin", "shopkeeper", "user"]), (req, res) => {
   if (req.token.role === "shopkeeper" && req.body.margin && req.body.status) {
-    Item.findOneAndUpdate(
-      { _id: req.params.id },
-      { status: req.body.status, margin: req.body.margin }
-    ).exec(err => {
-      if (err) {
+    User.findOne({ _id: req.token.id })
+      .then(user => {
+        Item.findOneAndUpdate(
+          { _id: req.params.id },
+          { status: req.body.status, margin: req.body.margin, shopkeeper: user }
+        ).exec(err => {
+          if (err) {
+            res.sendStatus(500);
+            return console.error(err);
+          }
+          res.sendStatus(201);
+          return;
+        });
+      })
+      .catch(e => {
         res.sendStatus(500);
-        return console.error(err);
-      }
-      res.sendStatus(201);
-      return;
-    });
+        return;
+      });
+  }
+  if (req.token.role === "user" && req.body.status === "sold") {
+    User.findOne({ _id: req.token.id })
+      .then(user => {
+        Item.findOneAndUpdate(
+          { _id: req.params.id },
+          { status: req.body.status, margin: req.body.margin, buyer: user }
+        ).exec(err => {
+          if (err) {
+            res.sendStatus(500);
+            return console.error(err);
+          }
+          res.sendStatus(201);
+          return;
+        });
+      })
+      .catch(e => {
+        res.sendStatus(500);
+        return;
+      });
   }
 });
 

@@ -25,7 +25,7 @@ export const MarketPage = () => {
           setFilteredItems(data.items);
         });
     }
-  }, [items, filteredItems]);
+  }, [items, filteredItems, auth.token]);
 
   const filterItems = e => {
     e.preventDefault();
