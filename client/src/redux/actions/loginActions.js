@@ -1,13 +1,5 @@
 // Authentication/login actions.
-import { REQUEST_AUTH, RECEIVE_AUTH, ERROR_AUTH } from "./actionTypes.js";
-
-// This might get removed.
-export const setAuthentication = user => {
-  return {
-    type: "SET_AUTHENTICATION",
-    payload: user
-  };
-};
+import { REQUEST_AUTH, RECEIVE_AUTH, ERROR_AUTH } from "../actionTypes.js";
 
 /*
  * Authentication/login action creators.

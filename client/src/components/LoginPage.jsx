@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { sendLoginRequest } from "../redux/actions.js";
+import { sendLoginRequest } from "../redux/actions/loginActions";
 import { connect } from "react-redux";
 
 // Unconnected component.
@@ -29,9 +29,6 @@ const Alert = connect(mapStateToProps)(AlertC);
 const LoginPageC = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // This is no longer needed since I replace it with Redux thunk.
-  // But I'll leave it here just in case.
-  //const [success, setSuccess] = useState(true);
 
   const login = e => {
     e.preventDefault();
@@ -39,36 +36,8 @@ const LoginPageC = props => {
       email: email,
       password: password
     };
-
+    // Send login request to API.
     props.sendLoginRequest(credentials);
-    // I replaced this with Redux thunk function (see above).
-    /*fetch("http://localhost:5000/api/login", {
-      method: "POST",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(credentials)
-    })
-      .then(response => {
-        if (response.ok) {
-          setSuccess(true);
-          return response.json();
-        } else {
-          setSuccess(false);
-        }
-      })
-      .then(result => {
-        setEmail("");
-        setPassword("");
-
-        if (result) {
-          // Login ok token is in result
-          console.log("Success: " + JSON.stringify(result));
-          // Redirect to home page after setting token to Redux store?
-        }
-      })
-      .catch(e => console.error("Error: " + e));*/
   };
 
   return (

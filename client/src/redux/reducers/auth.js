@@ -10,8 +10,6 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_AUTHENTICATION":
-      return action.payload;
     case REQUEST_AUTH:
       return {
         ...state,
@@ -28,7 +26,7 @@ export const authReducer = (state = initialState, action) => {
       };
     case ERROR_AUTH:
       return Object.assign({}, initialState, {
-        error: action.error
+        error: action.error.toString()
       });
     default:
       return state;
