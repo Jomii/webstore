@@ -44,6 +44,26 @@ const UserForm = props => {
       .catch(e => console.error("Error: " + e));
   };
 
+  const deleteUser = e => {
+    fetch(user.links[0].self, {
+      method: "DELETE",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          setAlertType("success");
+          setAlertMessage("User deleted");
+        } else {
+          setAlertType("danger");
+          setAlertMessage("Failed to delete user");
+        }
+      })
+      .catch(e => console.error("Error: " + e));
+  };
+
   return (
     <div>
       <form onSubmit={update}>
@@ -97,6 +117,13 @@ const UserForm = props => {
         <br />
         <button type="submit" className="btn btn-primary my-3">
           Save
+        </button>
+        <button
+          type="button"
+          onClick={deleteUser}
+          className="btn btn-danger my-3 ml-3"
+        >
+          Delete user
         </button>
       </form>
       <Alert type={alertType} message={alertMessage} />
