@@ -35,6 +35,23 @@ router.get("/", (req, res) => {
   }
 });
 
+router.get("/:id", (req, res) => {
+  console.log("Fetching single item from backend");
+  Item.findOne({ _id: req.params.id }, (err, item) => {
+    if (err) {
+      res.sendStatus(404);
+      return console.error(err);
+    }
+    if (!item) {
+      res.sendStatus(404);
+    } else {
+      res.status(200);
+      res.location(path + item._id);
+      res.json({ item: item });
+    }
+  });
+});
+
 router.post("/", (req, res) => {
   let newItem = new Item({
     name: req.body.name,
@@ -56,9 +73,11 @@ router.post("/", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
+  console.log("updating?");
+  console.log(req.body);
   Item.findOneAndUpdate(
     { _id: req.params.id },
-    { status: req.body.status }
+    { status: req.body.status, margin: req.body.margin }
   ).exec(err => {
     if (err) {
       res.sendStatus(500);
