@@ -55,11 +55,12 @@ router.get("/:id", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
 
 router.post("/", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
   User.findOne({ _id: req.token.id })
-    .then(() => {
+    .then(user => {
       let newItem = new Item({
         name: req.body.name,
         description: req.body.description,
-        price: req.body.price
+        price: req.body.price,
+        seller: user
       });
 
       newItem.save(err => {
