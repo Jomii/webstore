@@ -1,16 +1,18 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 export const PendingItem = props => {
   const [confirmed, setConfirmed] = useState(false);
   const [margin, setMargin] = useState(1.1);
+  const auth = useSelector(state => state.auth);
   const confirmItem = () => {
-    console.log(margin);
     setConfirmed(true);
     fetch(props.iteminfo.links[0].self, {
       method: "PUT",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + auth.token
       },
       body: JSON.stringify({ status: "listed", margin: margin })
     }).catch(e => setConfirmed(false));

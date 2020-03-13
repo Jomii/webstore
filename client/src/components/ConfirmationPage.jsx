@@ -11,7 +11,11 @@ export const ConfirmationPage = () => {
   const auth = useSelector(state => state.auth);
   useEffect(() => {
     if (!item) {
-      fetch(`http://localhost:5000/api/items/${id}`)
+      fetch(`http://localhost:5000/api/items/${id}`, {
+        headers: {
+          Authorization: "Bearer " + auth.token
+        }
+      })
         .then(response => {
           return response.json();
         })
@@ -22,12 +26,14 @@ export const ConfirmationPage = () => {
     }
   }, [item, id]);
 
-  const pay = () => {
+  const pay = e => {
+    e.preventDefault();
     fetch(item.item.links[0].self, {
       method: "PUT",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + auth.token
       },
       body: JSON.stringify({ status: "sold" })
     })

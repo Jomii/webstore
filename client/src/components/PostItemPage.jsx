@@ -19,7 +19,8 @@ export const PostItemPage = () => {
       method: "POST",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + auth.token
       },
       body: JSON.stringify(item)
     })
