@@ -133,4 +133,10 @@ api.delete("/:id", (req, res) => {
   });
 });
 
+api.delete("/", (req, res) => {
+  console.log("Deleting all users");
+  User.deleteMany().exec();
+  res.sendStatus(200);
+});
+
 module.exports = api;

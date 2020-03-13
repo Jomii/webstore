@@ -10,8 +10,8 @@ const schemaDefaults = {
     defaultValue: "pending"
   },
   margin: {
-    values: [0.1, 0.2, 0.3],
-    default: 0.1
+    values: [1.1, 1.2, 1.3],
+    default: 1.1
   }
 };
 
@@ -34,7 +34,15 @@ const itemSchema = new mongoose.Schema({
     default: schemaDefaults.margin.defaultValue,
     enum: schemaDefaults.margin.values
   },
-  owner: {
+  seller: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
+  buyer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
+  shopkeeper: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
