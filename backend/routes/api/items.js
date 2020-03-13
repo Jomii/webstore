@@ -3,8 +3,9 @@ const router = express.Router();
 const Item = require("../../models/item.js").Item;
 const User = require("../../models/user.js").User;
 const path = "http://localhost:5000/api/items/";
+const requireRole = require("../../utils/accessControl/jwtAuth").requireRole;
 
-router.get("/", (req, res) => {
+router.get("/", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
   console.log("Fetching items from backend");
   if (req.query.status == "listed") {
     Item.find({ status: "listed" }).then(results => {
@@ -35,7 +36,7 @@ router.get("/", (req, res) => {
   }
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
   console.log("Fetching single item from backend");
   Item.findOne({ _id: req.params.id }, (err, item) => {
     if (err) {
@@ -52,29 +53,30 @@ router.get("/:id", (req, res) => {
   });
 });
 
-router.post("/", (req, res) => {
-  let newItem = new Item({
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price
-  });
+router.post("/", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
+  User.findOne({ _id: req.token.id })
+    .then(() => {
+      let newItem = new Item({
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price
+      });
 
-  newItem.save(err => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error(err);
-    }
-
-    console.log("Inserted a new item to collection");
-    res.status(201);
-    res.location(path + newItem._id);
-    res.json(newItem);
-  });
+      newItem.save(err => {
+        if (err) {
+          res.sendStatus(500);
+          return console.error(err);
+        }
+        console.log("Inserted a new item to collection");
+        res.status(201);
+        res.location(path + newItem._id);
+        res.json(newItem);
+      });
+    })
+    .catch(e => res.sendStatus(500));
 });
 
-router.put("/:id", (req, res) => {
-  console.log("updating?");
-  console.log(req.body);
+router.put("/:id", requireRole(["admin", "shopkeeper"]), (req, res) => {
   Item.findOneAndUpdate(
     { _id: req.params.id },
     { status: req.body.status, margin: req.body.margin }

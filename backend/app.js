@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const app = express();
 const bcrypt = require("bcryptjs");
+const jwtauth = require("./utils/accessControl/jwtAuth");
 
 const User = require("./models/user.js").User;
 
@@ -24,6 +25,9 @@ const port = 5000;
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+
+//JWT
+app.use(jwtauth.tokenParser);
 
 //users & items routes
 app.use("/api/login", login);
