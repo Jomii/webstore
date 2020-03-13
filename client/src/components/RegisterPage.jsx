@@ -1,24 +1,5 @@
 import React, { useState } from "react";
-
-const Alert = props => {
-  const success = props.success;
-
-  if (success) {
-    return (
-      <div className="alert alert-success" role="alert">
-        User registered!
-      </div>
-    );
-  } else if (success === false) {
-    return (
-      <div className={"alert alert-danger"} role="alert">
-        User registration was unsuccessful :(
-      </div>
-    );
-  } else {
-    return null;
-  }
-};
+import { Alert } from "./Alert.jsx";
 
 export const RegisterPage = () => {
   const [firstName, setFirstName] = useState("");
@@ -26,7 +7,8 @@ export const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShopkeeper, setShopkeeper] = useState(false);
-  const [success, setSuccess] = useState(null);
+  const [alertType, setAlertType] = useState(null);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const register = e => {
     e.preventDefault();
@@ -54,10 +36,12 @@ export const RegisterPage = () => {
         setShopkeeper(false);
 
         // Notify user of success with Alert
-        if (!response.ok) {
-          setSuccess(false);
+        if (response.ok) {
+          setAlertType("success");
+          setAlertMessage("User registered!");
         } else {
-          setSuccess(true);
+          setAlertType("danger");
+          setAlertMessage("User registration was unsuccessful :(");
         }
       })
       .catch(e => console.log("failed"));
@@ -65,7 +49,7 @@ export const RegisterPage = () => {
 
   return (
     <div>
-      <Alert success={success} />
+      <Alert type={alertType} message={alertMessage} />
       <h1>Register</h1>
       <form onSubmit={register}>
         <div className="form-group">

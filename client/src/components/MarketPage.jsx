@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { ListedItem } from "./ListedItem.jsx";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 export const MarketPage = () => {
   const [items, setItems] = useState();
   const [query, setQuery] = useState("");
   const [filteredItems, setFilteredItems] = useState();
+  const auth = useSelector(state => state.auth);
 
   useEffect(() => {
     if (!items) {
@@ -30,24 +33,28 @@ export const MarketPage = () => {
     setQuery("");
   };
 
-  return (
-    <div>
-      <div className="row justify-content-center search-container">
-        <form className="form-inline search-form">
-          <input value={query} onChange={e => setQuery(e.target.value)} />
-          <button type="submit" onClick={filterItems}>
-            Search
-          </button>
-        </form>
+  if (auth.role) {
+    return (
+      <div>
+        <div className="row justify-content-center search-container">
+          <form className="form-inline search-form">
+            <input value={query} onChange={e => setQuery(e.target.value)} />
+            <button type="submit" onClick={filterItems}>
+              Search
+            </button>
+          </form>
+        </div>
+        <h1>Items:</h1>
+        {filteredItems ? (
+          <>
+            {filteredItems.map((item, index) => (
+              <ListedItem iteminfo={item} key={index} />
+            ))}
+          </>
+        ) : null}
       </div>
-      <h1>Items:</h1>
-      {filteredItems ? (
-        <>
-          {filteredItems.map((item, index) => (
-            <ListedItem iteminfo={item} key={index} />
-          ))}
-        </>
-      ) : null}
-    </div>
-  );
+    );
+  } else {
+    return <Redirect to="/" />;
+  }
 };

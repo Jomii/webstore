@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
     // Add validator function.
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    minlength: 4
   },
   firstName: {
     type: String,
@@ -17,7 +18,8 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    minlength: 4
   },
   role: {
     type: String,

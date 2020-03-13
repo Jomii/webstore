@@ -2,7 +2,9 @@ import React, { useState } from "react";
 
 export const PendingItem = props => {
   const [confirmed, setConfirmed] = useState(false);
+  const [margin, setMargin] = useState(1.1);
   const confirmItem = () => {
+    console.log(margin);
     setConfirmed(true);
     fetch(props.iteminfo.links[0].self, {
       method: "PUT",
@@ -10,7 +12,7 @@ export const PendingItem = props => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ status: "listed" })
+      body: JSON.stringify({ status: "listed", margin: margin })
     }).catch(e => setConfirmed(false));
   };
 
@@ -21,6 +23,16 @@ export const PendingItem = props => {
         <h4>Item's price: {props.iteminfo.price}</h4>
         <h4>Item's status: {props.iteminfo.status}</h4>
         <p>Item's description: {props.iteminfo.description}</p>
+        <select
+          id="margin"
+          name="margin"
+          value={margin}
+          onChange={e => setMargin(e.target.value)}
+        >
+          <option value="1.1">1.10 margin</option>
+          <option value="1.2">1.20 margin</option>
+          <option value="1.3">1.30 margin</option>
+        </select>
         <button onClick={confirmItem}>Confirm</button>
       </div>
     );

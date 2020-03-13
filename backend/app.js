@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 const helmet = require("helmet");
 const cors = require("cors");
 const app = express();
+const bcrypt = require("bcryptjs");
+
+const User = require("./models/user.js").User;
+
+const saltRounds = 12;
 
 // connect database
 mongoose.connect("mongodb://localhost/WWWProgramming", {
@@ -25,4 +30,36 @@ app.use("/api/login", login);
 app.use("/api/users", users);
 app.use("/api/items", items);
 
-app.listen(port, () => console.log(`Backend running on port ${port}.`));
+//Creating admin user
+const createAdminUser = () => {
+  User.findOne({ role: "admin" }).then(result => {
+    if (!result) {
+      bcrypt.hash("12345", saltRounds, (err, hash) => {
+        if (err) {
+          return console.error(err);
+        }
+        let newUser = new User({
+          email: "admin@admin.com",
+          firstName: "Admin",
+          lastName: "User",
+          password: hash,
+          role: "admin"
+        });
+
+        newUser
+          .save()
+          .then(() =>
+            console.log(`Added admin user (${newUser.email}) to collection`)
+          )
+          .catch(e => console.log(e));
+      });
+    } else {
+      console.log("Admin user already exists.");
+    }
+  });
+};
+
+app.listen(port, () => {
+  console.log(`Backend running on port ${port}.`);
+  createAdminUser();
+});
