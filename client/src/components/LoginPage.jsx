@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { sendLoginRequest } from "../redux/actions/loginActions";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 // Unconnected component.
 const AlertC = props => {
+  if (props.token) return <Redirect to="/" />; //redirects on succesfull login
   const success = props.success;
-
   if (success === false) {
     return (
       <div className={"alert alert-danger"} role="alert">
@@ -19,7 +20,8 @@ const AlertC = props => {
 
 const mapStateToProps = state => {
   const error = state.auth.error;
-  return { success: error === null ? true : false };
+  const token = state.auth.token;
+  return { success: error === null, token: token };
 };
 
 // Connected Alert-component
