@@ -86,6 +86,16 @@ const NavLogin = () => {
   );
 };
 
+const NavLogout = () => {
+  return (
+    <li className="nav-item active">
+      <Link to="/logout" className="nav-link">
+        Logout
+      </Link>
+    </li>
+  );
+};
+
 /*
  * Main component - the NavigationBar
  */
@@ -104,6 +114,7 @@ export const NavigationBar = () => {
           <NavPendingItems />
         )}
         {auth.role !== null && <NavProfile />}
+        {auth.role !== null && <NavLogout />}
         {auth.role === null && <NavRegister />}
         {auth.role === null && <NavLogin />}
       </ul>

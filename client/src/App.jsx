@@ -13,6 +13,7 @@ import { ProfilePage } from "./components/ProfilePage.jsx";
 import { PendingItemsPage } from "./components/PendingItemsPage.jsx";
 import { ConfirmationPage } from "./components/ConfirmationPage.jsx";
 import { PostItemPage } from "./components/PostItemPage.jsx";
+import { LogoutPage } from "./components/LogoutPage.jsx";
 
 //Other components
 import { Footer } from "./components/Footer.jsx";
@@ -35,6 +36,7 @@ export const App = () => {
             <Route path="/profile" component={ProfilePage} />
             <Route path="/pending-items" component={PendingItemsPage} />
             <Route path="/post-item" component={PostItemPage} />
+            <Route path="/logout" component={LogoutPage} />
             <Route component={NoMatchPage} />
           </Switch>
         </Layout>
