@@ -1,4 +1,4 @@
-import { REQUEST_AUTH, RECEIVE_AUTH, ERROR_AUTH } from "../actionTypes";
+import { REQUEST_AUTH, RECEIVE_AUTH, ERROR_AUTH, LOGOUT } from "../actionTypes";
 
 const initialState = {
   token: null,

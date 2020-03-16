@@ -1,23 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Redirect } from "react-router-dom";
-import { logout } from "../..redux/actions/loginActions";
+import { Link } from "react-router-dom";
+import { logout } from "../redux/actions/loginActions";
 
-const LogoutPage = () => {
+export const LogoutPage = () => {
   const dispatch = useDispatch();
-  dispatch(logout);
-
-  const redirectToHome = e => {
-    e.preventDefault();
-    return <Redirect to="/" />; // redirect to main page.
-  };
+  useEffect(() => {
+    dispatch(logout());
+  });
 
   return (
     <div>
       <p className="alert alert-success">Logout successful</p>
-      <button className="btn btn-primary" onClick={redirectToHome}>
+      <Link to="/" className="btn btn-primary">
         Back to Home
-      </button>
+      </Link>
     </div>
   );
 };
