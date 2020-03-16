@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Alert } from "./Alert.jsx";
+import { Redirect } from "react-router-dom";
 
 /* Refactor to be used in Register page as well? */
 const UserForm = props => {
@@ -134,6 +135,10 @@ const UserForm = props => {
 export const ProfilePage = () => {
   const [formData, setFormData] = useState(null);
   const auth = useSelector(state => state.auth);
+  const [boughtItems, setBoughtItems] = useState(null);
+  const [listedItems, setListedItems] = useState(null);
+  const [acceptedItems, setAcceptedItems] = useState(null);
+  const [itemsFetched, setItemsFetched] = useState(false);
 
   useEffect(() => {
     if (auth.token) {
@@ -142,20 +147,90 @@ export const ProfilePage = () => {
         .then(data => {
           setFormData(data);
         });
+      if (!itemsFetched) {
+        fetch("http://localhost:5000/api/items", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + auth.token
+          }
+        })
+          .then(response => {
+            return response.json();
+          })
+          .then(data => {
+            setItemsFetched(true);
+            let tempBoughtItems = [];
+            let tempListedItems = [];
+            let tempAcceptedItems = [];
+            for (let item of data.items) {
+              if (auth.id === item.seller) tempListedItems.push(item);
+              if (auth.id === item.buyer) tempBoughtItems.push(item);
+              if (auth.id === item.shopkeeper) tempAcceptedItems.push(item);
+            }
+            setBoughtItems(tempBoughtItems);
+            setListedItems(tempListedItems);
+            setAcceptedItems(tempAcceptedItems);
+          });
+      }
     }
-  }, [auth]);
+  }, [auth, listedItems, boughtItems, acceptedItems, itemsFetched]);
+
+  const listBoughtItems = () => {
+    if (boughtItems && boughtItems.length > 0) {
+      return (
+        <div className="card">
+          <h1>Bought items:</h1>
+          {boughtItems.map((item, key) => (
+            <h4 key={key}>
+              Item: {item.name}, price: {item.price}, status: {item.status}
+            </h4>
+          ))}
+        </div>
+      );
+    } else return null;
+  };
+
+  const listListedItems = () => {
+    if (listedItems && listedItems.length > 0) {
+      return (
+        <div className="card">
+          <h1>Listed items:</h1>
+          {listedItems.map((item, key) => (
+            <h4 key={key}>
+              Item: {item.name}, price: {item.price}, status: {item.status}
+            </h4>
+          ))}
+        </div>
+      );
+    } else return null;
+  };
+
+  const listAcceptedItems = () => {
+    if (acceptedItems && acceptedItems.length > 0) {
+      return (
+        <div className="card">
+          <h1>Accepted items:</h1>
+          {acceptedItems.map((item, key) => (
+            <h4 key={key}>
+              Item: {item.name}, price: {item.price}, status: {item.status}
+            </h4>
+          ))}
+        </div>
+      );
+    } else return null;
+  };
 
   if (!auth.token) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        No user logged in
-      </div>
-    );
+    return <Redirect to="/" />;
   } else {
     return (
       <div>
         <h1>Profile page</h1>
         {formData ? <UserForm formData={formData} /> : null}
+        {listListedItems()}
+        {listBoughtItems()}
+        {listAcceptedItems()}
+        <br />
       </div>
     );
   }
