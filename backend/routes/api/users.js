@@ -2,8 +2,9 @@ const express = require("express");
 const api = express.Router();
 const bcrypt = require("bcryptjs");
 const { User } = require("../../models/user");
-const path = "http://localhost:5000/api/users/";
+const requireRole = require("../../utils/accessControl/jwtAuth").requireRole;
 
+const path = "http://localhost:5000/api/users/";
 const saltRounds = 12;
 
 // Create a new user
@@ -78,7 +79,7 @@ api.put("/:id", (req, res) => {
 });
 
 // Get all users
-api.get("/", (req, res) => {
+api.get("/", requireRole(["admin"]), (req, res) => {
   console.log("Fetching users from backend");
 
   User.find((err, users) => {
