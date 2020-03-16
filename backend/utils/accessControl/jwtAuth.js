@@ -1,7 +1,5 @@
 const jwt = require("jsonwebtoken");
-
-// Find a better place for this.
-const secret = "y64u567y2g4";
+const secret = require("../config").jwt_secret;
 
 function requireRole(roles) {
   return function(req, res, next) {

@@ -3,8 +3,7 @@ const api = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { User } = require("../../models/user");
-
-const secret = "y64u567y2g4";
+const secret = require("../../utils/config").jwt_secret;
 
 // Login
 api.post("/", (req, res) => {

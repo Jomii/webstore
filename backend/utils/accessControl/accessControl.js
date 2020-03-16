@@ -1,7 +1,5 @@
 const jwt = require("jsonwebtoken");
-
-// Find a better place for this.
-const secret = "y64u567y2g4";
+const secret = require("../config").jwt_secret;
 
 /* Gets normal middleware parameters (req, res, next)
  * and allowedRoles parameter, which should be an array of
