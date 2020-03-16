@@ -30,7 +30,7 @@ api.post("/", (req, res) => {
             jwt.sign(
               { id: user.id, email: user.email, role: user.role },
               secret,
-              { algorithm: "HS256" },
+              { algorithm: "HS256", expiresIn: "15min" },
               (err, token) => {
                 res.json({ token: token, id: user.id, role: user.role });
               }
