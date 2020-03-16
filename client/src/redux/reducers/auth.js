@@ -28,6 +28,8 @@ export const authReducer = (state = initialState, action) => {
       return Object.assign({}, initialState, {
         error: action.error.toString()
       });
+    case LOGOUT:
+      return initialState;
     default:
       return state;
   }

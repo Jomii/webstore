@@ -1,5 +1,17 @@
 // Authentication/login actions.
-import { REQUEST_AUTH, RECEIVE_AUTH, ERROR_AUTH } from "../actionTypes.js";
+import {
+  REQUEST_AUTH,
+  RECEIVE_AUTH,
+  ERROR_AUTH,
+  LOGOUT
+} from "../actionTypes.js";
+
+/*
+ * Logout action creator.
+ */
+export const logout = () => {
+  return { type: LOGOUT };
+};
 
 /*
  * Authentication/login action creators.

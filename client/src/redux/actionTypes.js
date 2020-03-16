@@ -7,6 +7,8 @@
 export const REQUEST_AUTH = "REQUEST_AUTH";
 export const RECEIVE_AUTH = "RECEIVE_AUTH";
 export const ERROR_AUTH = "ERROR_AUTH";
+// Handle logout.
+export const LOGOUT = "LOGOUT";
 
 /*
  * These actions handle GET requests to api/items
