@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 /*
- * Navbar components.
+ * Navbar sub-components.
  */
 
 const NavHome = () => {
@@ -86,53 +86,27 @@ const NavLogin = () => {
   );
 };
 
+/*
+ * Main component - the NavigationBar
+ */
+
 export const NavigationBar = () => {
   const auth = useSelector(state => state.auth);
 
-  const navBar = () => {
-    if (auth.role === "admin") {
-      return (
-        <>
-          <NavHome />
-          <NavMarket />
-          <NavPostItem />
-          <NavUsers />
-          <NavPendingItems />
-          <NavProfile />
-        </>
-      );
-    } else if (auth.role === "shopkeeper") {
-      return (
-        <>
-          <NavHome />
-          <NavMarket />
-          <NavPendingItems />
-          <NavProfile />
-        </>
-      );
-    } else if (auth.role === "user") {
-      return (
-        <>
-          <NavHome />
-          <NavMarket />
-          <NavPostItem />
-          <NavProfile />
-        </>
-      );
-    } else {
-      return (
-        <>
-          <NavHome />
-          <NavRegister />
-          <NavLogin />
-        </>
-      );
-    }
-  };
-
   return (
     <nav className="navbar navbar-expand-sm bg-light navbar-light">
-      <ul className="navbar-nav">{navBar()}</ul>
+      <ul className="navbar-nav">
+        <NavHome />
+        <NavMarket />
+        {(auth.role === "admin" || auth.role === "user") && <NavPostItem />}
+        {auth.role === "admin" && <NavUsers />}
+        {(auth.role === "admin" || auth.role === "shopkeeper") && (
+          <NavPendingItems />
+        )}
+        {auth.role !== null && <NavProfile />}
+        {auth.role === null && <NavRegister />}
+        {auth.role === null && <NavLogin />}
+      </ul>
     </nav>
   );
 };
