@@ -77,7 +77,11 @@ router.post("/", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
 });
 
 router.put("/:id", requireRole(["admin", "shopkeeper", "user"]), (req, res) => {
-  if (req.token.role === "shopkeeper" && req.body.margin && req.body.status) {
+  if (
+    (req.token.role === "shopkeeper" || req.token.role === "admin") &&
+    req.body.margin &&
+    req.body.status
+  ) {
     User.findOne({ _id: req.token.id })
       .then(user => {
         Item.findOneAndUpdate(
