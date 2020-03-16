@@ -1,39 +1,41 @@
-import React from "react";
-//import { setAuthentication } from "../redux/actions.js";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { UserForm } from "./UserForm.jsx";
 
 export const UsersPage = () => {
   const auth = useSelector(state => state.auth);
-  /*useEffect(() => {
-    if (!auth) {
-      fetch("http://localhost:5000/api/users")
-        .then(response => {
-          return response.json();
-        })
+  const [users, setUsers] = useState();
+
+  useEffect(() => {
+    if (!users) {
+      fetch("http://localhost:5000/api/users", {
+        headers: {
+          Authorization: "Bearer " + auth.token
+        }
+      })
+        .then(response => response.json())
         .then(data => {
-          dispatch(setAuthentication(data));
+          setUsers(data.users);
         });
     }
   });
 
-  const userInfo = () => {
-    if (!auth) return null;
-    else {
-      return (
-        <>
-          <h1>Users</h1>
-          <p>
-            Username: {auth.username}, password: {auth.password}
-          </p>
-        </>
-      );
-    }
-  };
-
-  return userInfo();*/
   if (auth.role === "admin") {
-    return <h1>Content only admin is supposed to see</h1>;
+    return (
+      <div>
+        <h1>Users:</h1>
+        {users
+          ? users.map((user, index) => {
+              return (
+                <div className="card my-3 p-3" key={index}>
+                  <UserForm formData={user} />
+                </div>
+              );
+            })
+          : null}
+      </div>
+    );
   } else {
     return <Redirect to="/" />;
   }
