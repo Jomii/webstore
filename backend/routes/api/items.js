@@ -5,36 +5,39 @@ const User = require("../../models/user.js").User;
 const path = "http://localhost:5000/api/items/";
 const requireRole = require("../../utils/accessControl/jwtAuth").requireRole;
 
-router.get("/", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
-  console.log("Fetching items from backend");
-  if (req.query.status == "listed") {
-    Item.find({ status: "listed" }).then(results => {
-      res.status(200);
-      res.location(path);
-      res.json({ items: results });
-    });
-  } else if (req.query.status == "pending") {
-    Item.find({ status: "pending" }).then(results => {
-      res.status(200);
-      res.location(path);
-      res.json({ items: results });
-    });
-  } else {
-    Item.find((err, items) => {
-      if (err) {
-        res.sendStatus(404);
-        return console.error(err);
-      }
-      if (!items) {
-        res.sendStatus(404);
-      } else {
+router.get(
+  "/",
+  /*requireRole(["admin", "user", "shopkeeper"]),*/ (req, res) => {
+    console.log("Fetching items from backend");
+    if (req.query.status == "listed") {
+      Item.find({ status: "listed" }).then(results => {
         res.status(200);
         res.location(path);
-        res.json({ items: items });
-      }
-    });
+        res.json({ items: results });
+      });
+    } else if (req.query.status == "pending") {
+      Item.find({ status: "pending" }).then(results => {
+        res.status(200);
+        res.location(path);
+        res.json({ items: results });
+      });
+    } else {
+      Item.find((err, items) => {
+        if (err) {
+          res.sendStatus(404);
+          return console.error(err);
+        }
+        if (!items) {
+          res.sendStatus(404);
+        } else {
+          res.status(200);
+          res.location(path);
+          res.json({ items: items });
+        }
+      });
+    }
   }
-});
+);
 
 router.get("/:id", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
   console.log("Fetching single item from backend");

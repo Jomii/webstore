@@ -12,10 +12,10 @@ export const MarketPage = () => {
   useEffect(() => {
     if (!items) {
       fetch("http://localhost:5000/api/items?status=listed", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + auth.token
-        }
+        method: "GET"
+        // headers: {
+        //   Authorization: "Bearer " + auth.token
+        // }
       })
         .then(response => {
           return response.json();
@@ -23,7 +23,8 @@ export const MarketPage = () => {
         .then(data => {
           setItems(data.items);
           setFilteredItems(data.items);
-        });
+        })
+        .catch(error => console.log(error));
     }
   }, [items, filteredItems, auth.token]);
 
@@ -53,7 +54,11 @@ export const MarketPage = () => {
       {filteredItems ? (
         <>
           {filteredItems.map((item, index) => (
-            <ListedItem iteminfo={item} key={index} />
+            <ListedItem
+              iteminfo={item}
+              key={index}
+              allowBuy={auth.token !== null ? true : false}
+            />
           ))}
         </>
       ) : null}

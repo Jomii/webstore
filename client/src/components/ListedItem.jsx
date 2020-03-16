@@ -7,9 +7,11 @@ export const ListedItem = props => {
       <h3>Item's name: {props.iteminfo.name}</h3>
       <h4>Item's price: {props.iteminfo.price * props.iteminfo.margin}</h4>
       <p>Item's description: {props.iteminfo.description}</p>
-      <Link to={"/market/" + props.iteminfo._id}>
-        <button>Buy</button>
-      </Link>
+      {props.allowBuy === true && (
+        <Link to={"/market/" + props.iteminfo._id}>
+          <button>Buy</button>
+        </Link>
+      )}
     </div>
   );
 };
