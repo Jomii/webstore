@@ -54,28 +54,32 @@ api.post("/", (req, res) => {
 });
 
 // Update user
-api.put("/:id", (req, res) => {
+api.put("/:id", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
   console.log("Updating user by id: " + req.params.id);
 
-  User.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true },
-    (err, user) => {
-      if (err) {
-        res.sendStatus(400);
-        return console.error(err);
-      }
+  if (req.token.id === req.params.id || req.token.role === "admin") {
+    User.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+      (err, user) => {
+        if (err) {
+          res.sendStatus(400);
+          return console.error(err);
+        }
 
-      if (!user) {
-        res.sendStatus(404);
-      } else {
-        res.status(200);
-        res.location(path + user._id);
-        res.json({ user: user });
+        if (!user) {
+          res.sendStatus(404);
+        } else {
+          res.status(200);
+          res.location(path + user._id);
+          res.json({ user: user });
+        }
       }
-    }
-  );
+    );
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 // Get all users
@@ -99,42 +103,51 @@ api.get("/", requireRole(["admin"]), (req, res) => {
 });
 
 // Get user by id
-api.get("/:id", (req, res) => {
-  User.findOne({ _id: req.params.id }, (err, user) => {
-    if (err) {
-      res.sendStatus(404);
-      return console.error(err);
-    }
+api.get("/:id", requireRole(["admin", "shopkeeper", "user"]), (req, res) => {
+  if (req.token.id === req.params.id || req.token.role === "admin") {
+    User.findOne({ _id: req.params.id }, (err, user) => {
+      if (err) {
+        res.sendStatus(404);
+        return console.error(err);
+      }
 
-    if (!user) {
-      res.sendStatus(404);
-    } else {
-      res.status(200);
-      res.location(path + user._id);
-      res.json({ user: user });
-    }
-  });
+      if (!user) {
+        res.sendStatus(404);
+      } else {
+        res.status(200);
+        res.location(path + user._id);
+        res.json({ user: user });
+      }
+    });
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 // Delete user by id
-api.delete("/:id", (req, res) => {
-  User.findByIdAndDelete(req.params.id, (err, user) => {
-    if (err) {
-      res.sendStatus(404);
-      return console.error(err);
-    }
+api.delete("/:id", requireRole(["admin", "shopkeeper", "user"]), (req, res) => {
+  if (req.token.id === req.params.id || req.token.role === "admin") {
+    User.findByIdAndDelete(req.params.id, (err, user) => {
+      if (err) {
+        res.sendStatus(404);
+        return console.error(err);
+      }
 
-    if (!user) {
-      res.sendStatus(404);
-    } else {
-      res.status(204);
-      res.json();
-      console.log("Deleted user by id: " + req.params.id);
-    }
-  });
+      if (!user) {
+        res.sendStatus(404);
+      } else {
+        res.status(204);
+        res.json();
+        console.log("Deleted user by id: " + req.params.id);
+      }
+    });
+  } else {
+    res.sendStatus(401);
+  }
 });
 
-api.delete("/", (req, res) => {
+// Delete all users
+api.delete("/", requireRole(["admin"]), (req, res) => {
   console.log("Deleting all users");
   User.deleteMany().exec();
   res.sendStatus(200);

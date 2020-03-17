@@ -13,7 +13,11 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     if (auth.token) {
-      fetch("http://localhost:5000/api/users/" + auth.id)
+      fetch("http://localhost:5000/api/users/" + auth.id, {
+        headers: {
+          Authorization: "Bearer " + auth.token
+        }
+      })
         .then(response => response.json())
         .then(data => {
           setFormData(data.user);

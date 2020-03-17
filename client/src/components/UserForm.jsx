@@ -27,7 +27,8 @@ export const UserForm = props => {
       method: "PUT",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + auth.token
       },
       body: JSON.stringify(updatedUser)
     })
@@ -48,7 +49,8 @@ export const UserForm = props => {
       method: "DELETE",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + auth.token
       }
     })
       .then(response => {
