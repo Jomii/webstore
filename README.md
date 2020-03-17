@@ -218,7 +218,7 @@ Redux will be used with React as the state container.
 
 ## Testing
 
-Testing will be done manually.
+Testing was be done manually using Postman.
 
 Automated tests will be written if time allows.
 
