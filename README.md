@@ -61,7 +61,7 @@ Each member chooses an issue needed for the next major task to work on. Upon com
 ## Pages and navigation
 Pages for now, will be updated later on.
 
-![api](https://i.imgur.com/Cq5Zaqa.png)
+![api](https://i.imgur.com/Yrg7xjI.png)
 
 ## Modules your group created in your Node project
 
