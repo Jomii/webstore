@@ -9,7 +9,8 @@ router.get("/", async (req, res) => {
   //pending items
   if (
     req.query.status == "pending" &&
-    (req.token.role === "admin" || req.token.role === "shopkeeper")
+    ((req.token && req.token.role === "admin") ||
+      req.token.role === "shopkeeper")
   ) {
     console.log("Fetching pending items");
     Item.find({ status: "pending" })
@@ -127,7 +128,12 @@ router.put("/:id", requireRole(["admin", "shopkeeper", "user"]), (req, res) => {
         return;
       });
   }
-  if (req.token.role === "user" && req.body.status === "sold") {
+  if (
+    (req.token.role === "user" ||
+      req.token.role === "admin" ||
+      req.token.role === "shopkeeper") &&
+    req.body.status === "sold"
+  ) {
     User.findOne({ _id: req.token.id })
       .then(user => {
         Item.findOneAndUpdate(
