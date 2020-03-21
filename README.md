@@ -97,7 +97,16 @@ root
     │   └── manifest.json
     └── src
         ├── components
+        |   └── // All React components
         ├── redux
+        |   ├── actions
+        |   |   ├── itemAction.js
+        |   |   └── loginAction.js
+        |   ├── reducers
+        |   |   ├── auth.js
+        |   |   └── index.js
+        |   ├── actionTypes.js
+        |   └── store.js
         ├── App.css
         ├── App.jsx
         ├── App.test.js
