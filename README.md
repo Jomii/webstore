@@ -75,6 +75,9 @@ Pages for now, will be updated later on.
 ```
 root
 ├── README.md
+├── .gitignore
+├── package.json
+├── postman
 ├── backend
 |   ├── models
 |   |   ├── items.js
@@ -90,9 +93,11 @@ root
 |   ├── app.js
 |   └── package.json
 └── client
+    ├── README.md
     ├── node_modules
     ├── package.json
     ├── .gitignore
+    ├── build
     ├── public
     │   ├── favicon.ico
     │   ├── index.html
