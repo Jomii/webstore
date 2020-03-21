@@ -191,30 +191,34 @@ const itemSchema = new Schema({
 
 ## API
 
-REST backend with routes, responses are send in JSON format:
+To use the API the user must first login via /api/login to get a JWT token. All routes except POST to /api/users and /api/login require the use of the token.
+Include the token by adding the header `Authorization: Bearer {JWT token}` to requests.
 
 ### GET routes
 
-| HTTP route     | Description                           | Allowed users       |
-| -------------- | ------------------------------------- | ------------------- |
-| /api/users     | Fetches the list of all users         | admin?              |
-| /api/users/:id | Fetches a single user according to id | admin, user with id |
-| /api/items     | Fetches the list of all items         | everyone            |
-| /api/items/:id | Fetches a single item                 | everyone            |
+| HTTP route     | Description                           | Allowed users                     |
+| -------------- | ------------------------------------- | --------------------------------- |
+| /api/users     | Fetches the list of all users         | admin                             |
+| /api/users/:id | Fetches a single user according to id | admin, user with corresponding id |
+| /api/items     | Fetches the list of all items         | everyone                          |
+| /api/items/:id | Fetches a single item                 | everyone                          |
 
 ### DELETE routes:
 
-- /api/users - deletes all users
-- /api/users/:id - deletes a single user
-- /api/items - deletes all items
-- /api/items/:id - deletes a single item
+| HTTP route     | Description           | Allowed users       |
+| -------------- | --------------------- | ------------------- |
+| /api/users     | Deletes all users     | admin               |
+| /api/users/:id | delete a single       | admin, user with id |
+| /api/items     | Deletes all items     | admin, shopkeeper?  |
+| /api/items/:id | Deletes a single item | admin, shopkeeper?  |
 
-POST & PUT routes:
+### POST & PUT routes with required data:
 
-- /api/users with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret", role: "admin"}
-- /api/items with body: {"name" : "test item", "description": "test", "price": 5, "owner": "owner1", "status": "pending", "dateAdded": null, "dateSold": null}
-- /api/users/login with body: {"email": "email@test.com", "password": "secret"}
-- /api/users/register with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret"}
+| HTTP route                                                                                                    | Description | Allowed users |
+| ------------------------------------------------------------------------------------------------------------- | ----------- | ------------- |
+| /api/login with body: {"email": "email@test.com", "password": "secret"}                                       |             |               |
+| /api/users with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret"} |             |               |
+| /api/items with body: {"name" : "test item", "description": "test", "price": 5}                               |             |               |
 
 ### HATEOAS
 
