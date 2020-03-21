@@ -11,11 +11,8 @@ export const MarketPage = () => {
 
   useEffect(() => {
     if (!items) {
-      fetch("http://localhost:5000/api/items?status=listed", {
+      fetch("http://localhost:5000/api/items", {
         method: "GET"
-        // headers: {
-        //   Authorization: "Bearer " + auth.token
-        // }
       })
         .then(response => {
           return response.json();

@@ -53,30 +53,42 @@ api.post("/", (req, res) => {
   });
 });
 
+function updateUser(id, body, res) {
+  User.findByIdAndUpdate(id, body, { new: true }, (err, user) => {
+    if (err) {
+      res.sendStatus(400);
+      return console.error(err);
+    }
+
+    if (!user) {
+      res.sendStatus(404);
+    } else {
+      res.status(200);
+      res.location(path + user._id);
+      res.json({ user: user });
+    }
+  });
+}
+
 // Update user
 api.put("/:id", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
   console.log("Updating user by id: " + req.params.id);
 
   if (req.token.id === req.params.id || req.token.role === "admin") {
-    User.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true },
-      (err, user) => {
+    if (req.body.password) {
+      bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
         if (err) {
-          res.sendStatus(400);
+          res.sendStatus(500);
           return console.error(err);
         }
 
-        if (!user) {
-          res.sendStatus(404);
-        } else {
-          res.status(200);
-          res.location(path + user._id);
-          res.json({ user: user });
-        }
-      }
-    );
+        req.body["password"] = hash;
+
+        updateUser(req.params.id, req.body, res);
+      });
+    } else {
+      updateUser(req.params.id, req.body, res);
+    }
   } else {
     res.sendStatus(401);
   }

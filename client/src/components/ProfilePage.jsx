@@ -23,7 +23,7 @@ export const ProfilePage = () => {
           setFormData(data.user);
         });
       if (!itemsFetched) {
-        fetch("http://localhost:5000/api/items", {
+        fetch("http://localhost:5000/api/items?status=me", {
           method: "GET",
           headers: {
             Authorization: "Bearer " + auth.token
@@ -34,17 +34,9 @@ export const ProfilePage = () => {
           })
           .then(data => {
             setItemsFetched(true);
-            let tempBoughtItems = [];
-            let tempListedItems = [];
-            let tempAcceptedItems = [];
-            for (let item of data.items) {
-              if (auth.id === item.seller) tempListedItems.push(item);
-              if (auth.id === item.buyer) tempBoughtItems.push(item);
-              if (auth.id === item.shopkeeper) tempAcceptedItems.push(item);
-            }
-            setBoughtItems(tempBoughtItems);
-            setListedItems(tempListedItems);
-            setAcceptedItems(tempAcceptedItems);
+            setAcceptedItems(data.acceptedItems);
+            setListedItems(data.listedItems);
+            setBoughtItems(data.boughtItems);
           });
       }
     }

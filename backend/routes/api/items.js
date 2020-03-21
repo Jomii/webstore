@@ -5,39 +5,62 @@ const User = require("../../models/user.js").User;
 const path = "http://localhost:5000/api/items/";
 const requireRole = require("../../utils/accessControl/jwtAuth").requireRole;
 
-router.get(
-  "/",
-  /*requireRole(["admin", "user", "shopkeeper"]),*/ (req, res) => {
-    console.log("Fetching items from backend");
-    if (req.query.status == "listed") {
-      Item.find({ status: "listed" }).then(results => {
+router.get("/", async (req, res) => {
+  //pending items
+  if (
+    req.query.status == "pending" &&
+    (req.token.role === "admin" || req.token.role === "shopkeeper")
+  ) {
+    console.log("Fetching pending items");
+    Item.find({ status: "pending" })
+      .then(results => {
         res.status(200);
         res.location(path);
         res.json({ items: results });
-      });
-    } else if (req.query.status == "pending") {
-      Item.find({ status: "pending" }).then(results => {
-        res.status(200);
-        res.location(path);
-        res.json({ items: results });
-      });
-    } else {
-      Item.find((err, items) => {
-        if (err) {
-          res.sendStatus(404);
-          return console.error(err);
-        }
-        if (!items) {
-          res.sendStatus(404);
-        } else {
-          res.status(200);
-          res.location(path);
-          res.json({ items: items });
-        }
-      });
-    }
+      })
+      .catch(() => res.sendStatus(500));
   }
-);
+  //items which have a reference to the user accessing the route
+  else if (req.query.status == "me" && req.token.id) {
+    console.log("Fetching user's items");
+    console.log(req.token.id);
+    let tempBoughtItems = [];
+    let tempListedItems = [];
+    let tempAcceptedItems = [];
+
+    await Item.find({ buyer: req.token.id }).then(results => {
+      for (let result of results) {
+        tempBoughtItems.push(result);
+      }
+    });
+    await Item.find({ seller: req.token.id }).then(results => {
+      for (let result of results) {
+        tempListedItems.push(result);
+      }
+    });
+    await Item.find({ shopkeeper: req.token.id }).then(results => {
+      for (let result of results) {
+        tempAcceptedItems.push(result);
+      }
+    });
+    res.json({
+      boughtItems: tempBoughtItems,
+      listedItems: tempListedItems,
+      acceptedItems: tempAcceptedItems
+    });
+  }
+  //otherwise just returning a list of item's that have status: listed
+  else {
+    console.log("Fetching all listed items");
+    Item.find({ status: "listed" })
+      .then(results => {
+        res.status(200);
+        res.location(path);
+        res.json({ items: results });
+      })
+      .catch(() => res.sendStatus(500));
+  }
+});
 
 router.get("/:id", requireRole(["admin", "user", "shopkeeper"]), (req, res) => {
   console.log("Fetching single item from backend");
