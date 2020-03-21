@@ -110,13 +110,22 @@ root
 
 ## Mongo database and Mongoose schemas
 
+#### Notes
+
+- Credit card information is not saved to the database. We focused less on the payment system because in a real scenario a 3rd party payment system would most likely be used eg. [Stripe](https://stripe.com/en-fi).
+- Item description has a max length to limit exessive user inputs, which would decrease the performance of the database.
+- Shopkeepers price items by adding a profit margin to the items.
+- Items can have a status of pending, listed or sold.
+
 ### User
 
 ```javascript
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    minlength: 4
   },
   firstName: {
     type: String,
@@ -128,22 +137,16 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    minlength: 4
   },
   role: {
     type: String,
-    required: true
+    required: false,
+    default: "user"
   }
 });
 ```
-
-#### Notes
-
-- Use email as username
-- Mail address required?
-- Credit card information saved to db?
-- Separate schema/collection for passwords?
-- Separate schem/collection for roles?
 
 ### Item
 
@@ -211,14 +214,6 @@ const itemSchema = new mongoose.Schema({
 });
 ```
 
-#### Notes
-
-- Hardcoded name, description lengths or no?
-- Multiple prices for same item? (shopkeeper profit vs seller)
-- Link to user schema TODO
-- status: SOLD / WAITING-FOR-APPROVAL etc. needs design
-- dateAdded, dateSold needed?
-
 ## API
 
 To use the API the user must first login via /api/login to get a JWT token. All routes except POST to /api/users and /api/login require the use of the token.
@@ -235,20 +230,22 @@ Include the token by adding the header `Authorization: Bearer {JWT token}` to re
 
 ### DELETE routes:
 
-| HTTP route     | Description           | Allowed users       |
-| -------------- | --------------------- | ------------------- |
-| /api/users     | Deletes all users     | admin               |
-| /api/users/:id | delete a single       | admin, user with id |
-| /api/items     | Deletes all items     | admin, shopkeeper?  |
-| /api/items/:id | Deletes a single item | admin, shopkeeper?  |
+| HTTP route     | Description           | Allowed users                     |
+| -------------- | --------------------- | --------------------------------- |
+| /api/users     | Deletes all users     | admin                             |
+| /api/users/:id | Deletes a single item | admin, user with corresponding id |
+| /api/items     | Deletes all items     | admin                             |
+| /api/items/:id | Deletes a single item | admin, shopkeeper                 |
 
 ### POST & PUT routes with required data:
 
-| HTTP route                                                                                                    | Description | Allowed users |
-| ------------------------------------------------------------------------------------------------------------- | ----------- | ------------- |
-| /api/login with body: {"email": "email@test.com", "password": "secret"}                                       |             |               |
-| /api/users with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret"} |             |               |
-| /api/items with body: {"name" : "test item", "description": "test", "price": 5}                               |             |               |
+| HTTP route                                                                                                        | Description                | Allowed users                     |
+| ----------------------------------------------------------------------------------------------------------------- | -------------------------- | --------------------------------- |
+| /api/login with body: {"email": "email@test.com", "password": "secret"}                                           | Login & retrieve JWT token | everyone                          |
+| /api/users with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret"}     | Create user                | everyone                          |
+| /api/users/:id with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret"} | Edit user                  | admin, user with corresponding id |
+| /api/items with body: {"name" : "test item", "description": "test", "price": 5}                                   | Create item                | admin, shopkeeper, user           |
+| /api/items/:id with body: {"name" : "test item", "description": "test", "price": 5}                               | Edit item                  | admin, shopkeeper, user           |
 
 ### HATEOAS
 
