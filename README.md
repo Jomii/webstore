@@ -8,7 +8,11 @@ The directory structure of the code is up to your group to decide, but this READ
 
 # Running the project
 
-To run the project the line `config.vm.network "forwarded_port", guest: 5000, host: 5000` needs to be added to Vagrantfile.
+1. `config.vm.network "forwarded_port", guest: 5000, host: 5000` needs to be added to Vagrantfile.
+2. `npm install` in root folder
+3. `npm install` in root/backend folder
+4. `npm install` in root/client folder
+5. `npm run dev` in root folder
 
 # Initial project plan document
 
