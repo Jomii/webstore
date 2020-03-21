@@ -8,20 +8,32 @@ export const UserForm = props => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
-  /* Password field does not update anything currently */
   const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
   const [role, setRole] = useState(user.role);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState(null);
 
   const update = e => {
     e.preventDefault();
+
     const updatedUser = {
       firstName: firstName,
       lastName: lastName,
       email: email,
       role: role
     };
+
+    // Check if user is about to change passwords and check
+    // that the two user-typed password fields match (user-error prevention).
+    if (password !== "" && password !== rePassword) {
+      setAlertType("danger");
+      setAlertMessage("Passwords don't match!");
+      return;
+    }
+    if (password !== "") {
+      updatedUser["password"] = password;
+    }
 
     fetch(user.links[0].self, {
       method: "PUT",
@@ -104,6 +116,14 @@ export const UserForm = props => {
             placeholder="********"
             value={password}
             onChange={e => setPassword(e.target.value)}
+          />
+          <label>Retype password</label>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="********"
+            value={rePassword}
+            onChange={e => setRePassword(e.target.value)}
           />
         </div>
         <select
