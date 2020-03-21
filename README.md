@@ -16,6 +16,8 @@ The directory structure of the code is up to your group to decide, but this READ
 
 After running npm run dev in the root folder, the front-end is running at http://localhost:5000/ and the API can be accessed at http://localhost:3000/api/
 
+If the WWWProgramming mongo database does not have a users collection with an admin user, a default admin is created with email: admin@admin.com, password: 12345
+
 # Initial project plan document
 
 The headers that must be present in this document are shown here.
@@ -65,7 +67,6 @@ Each member chooses an issue needed for the next major task to work on. Upon com
    - Create a page where admins can view users and offers
 
 ## Pages and navigation
-
 
 ![api](https://i.imgur.com/Yrg7xjI.png)
 
