@@ -27,12 +27,6 @@ export const PendingItemsPage = () => {
   if (auth.role === "admin" || auth.role === "shopkeeper") {
     return (
       <div>
-        <div className="row justify-content-center search-container">
-          <form className="form-inline search-form">
-            <input type="text" />
-            <button type="submit">Search</button>
-          </form>
-        </div>
         <h1>Items:</h1>
         {items ? (
           <>
