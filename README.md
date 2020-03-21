@@ -14,6 +14,8 @@ The directory structure of the code is up to your group to decide, but this READ
 4. `npm install` in root/client folder
 5. `npm run dev` in root folder
 
+After running npm run dev in the root folder, the front-end is running at http://localhost:5000/ and the API can be accessed at http://localhost:3000/api/
+
 # Initial project plan document
 
 The headers that must be present in this document are shown here.
