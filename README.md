@@ -230,20 +230,22 @@ Include the token by adding the header `Authorization: Bearer {JWT token}` to re
 
 ### DELETE routes:
 
-| HTTP route     | Description           | Allowed users       |
-| -------------- | --------------------- | ------------------- |
-| /api/users     | Deletes all users     | admin               |
-| /api/users/:id | delete a single       | admin, user with id |
-| /api/items     | Deletes all items     | admin, shopkeeper?  |
-| /api/items/:id | Deletes a single item | admin, shopkeeper?  |
+| HTTP route     | Description           | Allowed users                     |
+| -------------- | --------------------- | --------------------------------- |
+| /api/users     | Deletes all users     | admin                             |
+| /api/users/:id | Deletes a single item | admin, user with corresponding id |
+| /api/items     | Deletes all items     | admin                             |
+| /api/items/:id | Deletes a single item | admin, shopkeeper                 |
 
 ### POST & PUT routes with required data:
 
-| HTTP route                                                                                                    | Description | Allowed users |
-| ------------------------------------------------------------------------------------------------------------- | ----------- | ------------- |
-| /api/login with body: {"email": "email@test.com", "password": "secret"}                                       |             |               |
-| /api/users with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret"} |             |               |
-| /api/items with body: {"name" : "test item", "description": "test", "price": 5}                               |             |               |
+| HTTP route                                                                                                        | Description                | Allowed users                     |
+| ----------------------------------------------------------------------------------------------------------------- | -------------------------- | --------------------------------- |
+| /api/login with body: {"email": "email@test.com", "password": "secret"}                                           | Login & retrieve JWT token | everyone                          |
+| /api/users with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret"}     | Create user                | everyone                          |
+| /api/users/:id with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret"} | Edit user                  | admin, user with corresponding id |
+| /api/items with body: {"name" : "test item", "description": "test", "price": 5}                                   | Create item                | admin, shopkeeper, user           |
+| /api/items/:id with body: {"name" : "test item", "description": "test", "price": 5}                               | Edit item                  | admin, shopkeeper, user           |
 
 ### HATEOAS
 
