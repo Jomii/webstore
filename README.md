@@ -66,7 +66,6 @@ Each member chooses an issue needed for the next major task to work on. Upon com
 
 ## Pages and navigation
 
-Pages for now, will be updated later on.
 
 ![api](https://i.imgur.com/Yrg7xjI.png)
 
