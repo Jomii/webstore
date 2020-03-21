@@ -148,7 +148,7 @@ const userSchema = new Schema({
 ### Item
 
 ```javascript
-const itemSchema = new Schema({
+const itemSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -156,27 +156,53 @@ const itemSchema = new Schema({
   description: {
     type: String,
     required: true,
-    maxlength: 400 // hardcoded length or no?
+    maxlength: 400
   },
   price: {
-    // Different prices?
     type: Number,
     required: true
   },
-  owner: {
-    // Reference to user-schema
-    type: ObjectId,
-    ref: "User",
-    required: true
+  margin: {
+    type: Number,
+    default: schemaDefaults.margin.defaultValue,
+    enum: schemaDefaults.margin.values
+  },
+  seller: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
+  buyer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
+  shopkeeper: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
   },
   status: {
-    // TODO
     type: String,
-    required: true
+    trim: true,
+    lowercase: true,
+    default: schemaDefaults.status.defaultValue,
+    enum: schemaDefaults.status.values,
+    validate: {
+      validator: val => {
+        for (let i = 0; i < schemaDefaults.status.values.length; i++) {
+          if (val === schemaDefaults.status.values[i] || val === "") {
+            return true;
+          }
+        }
+
+        return false;
+      },
+      message: `Status must be one of: "${schemaDefaults.status.values.join(
+        '", "'
+      )}"`
+    }
   },
   dateAdded: {
     type: Date,
-    required: false // or true?
+    default: Date.now
   },
   dateSold: {
     type: Date,
@@ -196,23 +222,26 @@ const itemSchema = new Schema({
 ## API
 
 To use the API the user must first login via /api/login to get a JWT token. All routes except POST to /api/users and /api/login require the use of the token.
-Include the token by adding the header ```Authorization: Bearer {JWT token}``` to requests.
+Include the token by adding the header `Authorization: Bearer {JWT token}` to requests.
 
 REST backend with routes, responses are sent in JSON format:
 
 GET routes:
+
 - /api/users - fetches list of all users
 - /api/users/:id - fetches a single user
 - /api/items - fetches a list of all items
 - /api/items/:id - fetches a single item
 
 DELETE routes:
+
 - /api/users - deletes all users
 - /api/users/:id - deletes a single user
 - /api/items - deletes all items
 - /api/items/:id - deletes a single item
 
 POST & PUT routes with required data:
+
 - /api/login with body: {"email": "email@test.com", "password": "secret"}
 - /api/users with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret"}
 - /api/items with body: {"name" : "test item", "description": "test", "price": 5}
