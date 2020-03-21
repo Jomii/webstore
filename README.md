@@ -66,7 +66,6 @@ Each member chooses an issue needed for the next major task to work on. Upon com
 
 ## Pages and navigation
 
-Pages for now, will be updated later on.
 
 ![api](https://i.imgur.com/Yrg7xjI.png)
 
@@ -75,6 +74,9 @@ Pages for now, will be updated later on.
 ```
 root
 ├── README.md
+├── .gitignore
+├── package.json
+├── postman
 ├── backend
 |   ├── models
 |   |   ├── items.js
@@ -86,13 +88,18 @@ root
 |   |     ├── login.js
 |   |     └── users.js
 |   ├── utils
+|   |   ├── accessControl
+|   |   |   └── jwtAuth.js
+|   |   └── config.js
 |   ├── .gitignore
 |   ├── app.js
 |   └── package.json
 └── client
+    ├── README.md
     ├── node_modules
     ├── package.json
     ├── .gitignore
+    ├── build
     ├── public
     │   ├── favicon.ico
     │   ├── index.html
