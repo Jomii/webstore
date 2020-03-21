@@ -113,10 +113,12 @@ root
 ### User
 
 ```javascript
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    minlength: 4
   },
   firstName: {
     type: String,
@@ -128,11 +130,13 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    minlength: 4
   },
   role: {
     type: String,
-    required: true
+    required: false,
+    default: "user"
   }
 });
 ```
