@@ -148,7 +148,7 @@ const userSchema = new Schema({
 ### Item
 
 ```javascript
-const itemSchema = new Schema({
+const itemSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -156,27 +156,53 @@ const itemSchema = new Schema({
   description: {
     type: String,
     required: true,
-    maxlength: 400 // hardcoded length or no?
+    maxlength: 400
   },
   price: {
-    // Different prices?
     type: Number,
     required: true
   },
-  owner: {
-    // Reference to user-schema
-    type: ObjectId,
-    ref: "User",
-    required: true
+  margin: {
+    type: Number,
+    default: schemaDefaults.margin.defaultValue,
+    enum: schemaDefaults.margin.values
+  },
+  seller: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
+  buyer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
+  shopkeeper: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
   },
   status: {
-    // TODO
     type: String,
-    required: true
+    trim: true,
+    lowercase: true,
+    default: schemaDefaults.status.defaultValue,
+    enum: schemaDefaults.status.values,
+    validate: {
+      validator: val => {
+        for (let i = 0; i < schemaDefaults.status.values.length; i++) {
+          if (val === schemaDefaults.status.values[i] || val === "") {
+            return true;
+          }
+        }
+
+        return false;
+      },
+      message: `Status must be one of: "${schemaDefaults.status.values.join(
+        '", "'
+      )}"`
+    }
   },
   dateAdded: {
     type: Date,
-    required: false // or true?
+    default: Date.now
   },
   dateSold: {
     type: Date,
