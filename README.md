@@ -110,6 +110,13 @@ root
 
 ## Mongo database and Mongoose schemas
 
+#### Notes
+
+- Credit card information is not saved to the database. We focused less on the payment system because in a real scenario a 3rd party payment system would most likely be used eg. [Stripe](https://stripe.com/en-fi).
+- Item description has a max length to limit exessive user inputs, which would decrease the performance of the database.
+- Shopkeepers price items by adding a profit margin to the items.
+- Items can have a status of pending, listed or sold.
+
 ### User
 
 ```javascript
@@ -140,14 +147,6 @@ const userSchema = new mongoose.Schema({
   }
 });
 ```
-
-#### Notes
-
-- Use email as username
-- Mail address required?
-- Credit card information saved to db?
-- Separate schema/collection for passwords?
-- Separate schem/collection for roles?
 
 ### Item
 
@@ -214,14 +213,6 @@ const itemSchema = new mongoose.Schema({
   }
 });
 ```
-
-#### Notes
-
-- Hardcoded name, description lengths or no?
-- Multiple prices for same item? (shopkeeper profit vs seller)
-- Link to user schema TODO
-- status: SOLD / WAITING-FOR-APPROVAL etc. needs design
-- dateAdded, dateSold needed?
 
 ## API
 
