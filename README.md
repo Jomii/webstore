@@ -8,7 +8,7 @@ The directory structure of the code is up to your group to decide, but this READ
 
 # Running the project
 
-To run the project the line ```config.vm.network "forwarded_port", guest: 5000, host: 5000``` needs to be added to Vagrantfile.
+To run the project the line `config.vm.network "forwarded_port", guest: 5000, host: 5000` needs to be added to Vagrantfile.
 
 # Initial project plan document
 
@@ -59,6 +59,7 @@ Each member chooses an issue needed for the next major task to work on. Upon com
    - Create a page where admins can view users and offers
 
 ## Pages and navigation
+
 Pages for now, will be updated later on.
 
 ![api](https://i.imgur.com/Yrg7xjI.png)
@@ -68,13 +69,20 @@ Pages for now, will be updated later on.
 ```
 root
 ├── README.md
-├── server
+├── backend
+|   ├── models
+|   |   ├── items.js
+|   |   └── user.js
 |   ├── node_modules
-|   ├── package.json
-|   ├── Server.js
-|   └── models
-|       ├── user.js
-|       └── item.js
+|   ├── routes
+|   |   ├── api
+|   |     ├── items.js
+|   |     ├── login.js
+|   |     └── users.js
+|   ├── utils
+|   ├── .gitignore
+|   ├── app.js
+|   └── package.json
 └── client
     ├── node_modules
     ├── package.json
@@ -84,13 +92,16 @@ root
     │   ├── index.html
     │   └── manifest.json
     └── src
+        ├── components
+        ├── redux
         ├── App.css
-        ├── App.js
+        ├── App.jsx
         ├── App.test.js
         ├── index.css
         ├── index.js
         ├── logo.svg
-        └── serviceWorker.js
+        ├── serviceWorker.js
+        └── setupTests.js
 ```
 
 ## Mongo database and Mongoose schemas
@@ -183,25 +194,30 @@ const itemSchema = new Schema({
 REST backend with routes, responses are send in JSON format:
 
 GET routes:
+
 - /api/users - fetches list of all users
 - /api/users/:id - fetches a single user
 - /api/items - fetches a list of all items
 - /api/items/:id - fetches a single item
 
 DELETE routes:
+
 - /api/users - deletes all users
 - /api/users/:id - deletes a single user
 - /api/items - deletes all items
 - /api/items/:id - deletes a single item
 
 POST & PUT routes:
+
 - /api/users with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret", role: "admin"}
-- /api/items with body: {"name" : "test item", "description": "test", "price": 5, "owner": "owner1", "status": "pending",  "dateAdded": null, "dateSold": null}
+- /api/items with body: {"name" : "test item", "description": "test", "price": 5, "owner": "owner1", "status": "pending", "dateAdded": null, "dateSold": null}
 - /api/users/login with body: {"email": "email@test.com", "password": "secret"}
 - /api/users/register with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret"}
 
 ### HATEOAS
+
 HATEOAS will be implemented by simply including links related to the resource object.
+
 ```JSON
 {
   ...
@@ -210,6 +226,7 @@ HATEOAS will be implemented by simply including links related to the resource ob
   ]
 }
 ```
+
 ## React and Redux
 
 In this group work we use React with [Create React App](https://github.com/facebook/create-react-app#create-react-app--)
