@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ListedItem } from "./ListedItem.jsx";
 import { useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
 
 export const MarketPage = () => {
   const [items, setItems] = useState();
@@ -35,8 +34,6 @@ export const MarketPage = () => {
     setFilteredItems(tempItems);
     setQuery("");
   };
-
-  // if (auth.role) {
   return (
     <div>
       <div className="row justify-content-center search-container">
@@ -61,7 +58,4 @@ export const MarketPage = () => {
       ) : null}
     </div>
   );
-  // } else {
-  //   return <Redirect to="/" />;
-  // }
 };

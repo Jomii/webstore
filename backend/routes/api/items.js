@@ -23,7 +23,6 @@ router.get("/", async (req, res) => {
   //items which have a reference to the user accessing the route
   else if (req.query.status == "me" && req.token.id) {
     console.log("Fetching user's items");
-    console.log(req.token.id);
     let tempBoughtItems = [];
     let tempListedItems = [];
     let tempAcceptedItems = [];
@@ -118,6 +117,7 @@ router.put("/:id", requireRole(["admin", "shopkeeper", "user"]), (req, res) => {
             res.sendStatus(500);
             return console.error(err);
           }
+          console.log("Changing item's status to listed");
           res.sendStatus(201);
           return;
         });
@@ -138,6 +138,7 @@ router.put("/:id", requireRole(["admin", "shopkeeper", "user"]), (req, res) => {
             res.sendStatus(500);
             return console.error(err);
           }
+          console.log("Changing item's status to sold");
           res.sendStatus(201);
           return;
         });
@@ -150,12 +151,14 @@ router.put("/:id", requireRole(["admin", "shopkeeper", "user"]), (req, res) => {
 });
 
 router.delete("/", requireRole(["admin"]), (req, res) => {
+  console.log("Deleting all items from db");
   Item.remove()
     .then(() => res.sendStatus(201))
     .catch(() => res.status(500));
 });
 
 router.delete("/:id", requireRole(["admin"]), (req, res) => {
+  console.log("Deleting a single item from db");
   Item.deleteOne({ _id: req.params.id })
     .then(() => res.sendStatus(201))
     .catch(e => res.status(500));
