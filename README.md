@@ -270,9 +270,9 @@ Redux will be used with React as the state container.
 
 ## Testing
 
-Testing was done manually using Postman.
+Testing was done manually using Postman. The Postman colletion, that can be imported, is included in the postman folder.
 
-Automated tests will be written if time allows.
+Unfortunately we had no time to implement automated tests.
 
 ## Project timetable and division of work
 
