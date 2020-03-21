@@ -191,28 +191,27 @@ const itemSchema = new Schema({
 
 ## API
 
-REST backend with routes, responses are send in JSON format:
+To use the API the user must first login via /api/login to get a JWT token. All routes except POST to /api/users and /api/login require the use of the token.
+Include the token by adding the header ```Authorization: Bearer {JWT token}``` to requests.
+
+REST backend with routes, responses are sent in JSON format:
 
 GET routes:
-
 - /api/users - fetches list of all users
 - /api/users/:id - fetches a single user
 - /api/items - fetches a list of all items
 - /api/items/:id - fetches a single item
 
 DELETE routes:
-
 - /api/users - deletes all users
 - /api/users/:id - deletes a single user
 - /api/items - deletes all items
 - /api/items/:id - deletes a single item
 
-POST & PUT routes:
-
-- /api/users with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret", role: "admin"}
-- /api/items with body: {"name" : "test item", "description": "test", "price": 5, "owner": "owner1", "status": "pending", "dateAdded": null, "dateSold": null}
-- /api/users/login with body: {"email": "email@test.com", "password": "secret"}
-- /api/users/register with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret"}
+POST & PUT routes with required data:
+- /api/login with body: {"email": "email@test.com", "password": "secret"}
+- /api/users with body: {"email": "email@test.com","firstname": "Foo", "lastname": "Bar", "password": "secret"}
+- /api/items with body: {"name" : "test item", "description": "test", "price": 5}
 
 ### HATEOAS
 
