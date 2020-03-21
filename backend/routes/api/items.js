@@ -9,8 +9,8 @@ router.get("/", async (req, res) => {
   //pending items
   if (
     req.query.status == "pending" &&
-    ((req.token && req.token.role === "admin") ||
-      req.token.role === "shopkeeper")
+    (req.token &&
+      (req.token.role === "admin" || req.token.role === "shopkeeper"))
   ) {
     console.log("Fetching pending items");
     Item.find({ status: "pending" })
@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
       .catch(() => res.sendStatus(500));
   }
   //items which have a reference to the user accessing the route
-  else if (req.query.status == "me" && req.token.id) {
+  else if (req.query.status && req.token && req.query.status == "me") {
     console.log("Fetching user's items");
     let tempBoughtItems = [];
     let tempListedItems = [];
