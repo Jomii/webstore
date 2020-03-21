@@ -193,14 +193,16 @@ const itemSchema = new Schema({
 
 REST backend with routes, responses are send in JSON format:
 
-GET routes:
+### GET routes
 
-- /api/users - fetches list of all users
-- /api/users/:id - fetches a single user
-- /api/items - fetches a list of all items
-- /api/items/:id - fetches a single item
+| HTTP route     | Description                           | Allowed users       |
+| -------------- | ------------------------------------- | ------------------- |
+| /api/users     | Fetches the list of all users         | admin?              |
+| /api/users/:id | Fetches a single user according to id | admin, user with id |
+| /api/items     | Fetches the list of all items         | everyone            |
+| /api/items/:id | Fetches a single item                 | everyone            |
 
-DELETE routes:
+### DELETE routes:
 
 - /api/users - deletes all users
 - /api/users/:id - deletes a single user
