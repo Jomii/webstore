@@ -271,12 +271,9 @@ Include the token by adding the header `Authorization: Bearer {JWT token}` to re
 HATEOAS will be implemented by simply including links related to the resource object.
 
 ```JSON
-{
-  ...
-  links: [
+  links: {
     "self": "http://localhost:3000/api/users/1"
-  ]
-}
+  }
 ```
 
 ## React and Redux
@@ -291,29 +288,5 @@ Testing was done manually using Postman. The Postman colletion, that can be impo
 
 Unfortunately we had no time to implement automated tests.
 
-## Project timetable and division of work
-
-```mermaid
-gantt
-	title Timetable
-	dateFormat  YYYY MM DD
-
-	section User management
-    DB schema           :a1, 2020-02-28, 3d
-	Create pages     :a2, after a1, 4d
-    Users API   :after a1, 1d
-
-	section Authorization
-	User auth      :after a1, 2d
-	Role based access      : 2d
-
-    section Buying and selling
-	DB schema      :after a2, 3d
-	Create pages      :4d
-
-    section Administration
-	Create page      :2d
-
-```
 
 _Good luck and happy WWWdevvin’!_
